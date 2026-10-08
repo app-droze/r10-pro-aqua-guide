@@ -1,0 +1,1033 @@
+<title>R10 Pro Aqua Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky chapter rail; every chapter pairs an animated stage (left) with its steps/controls (right), stacking to one column on phones. */
+:root{
+  --bg:#edf0f4; --surface:#ffffff; --surface-2:#e3e7ed; --fg:#15171c; --muted:#5a6270; --line:#d2d7df;
+  --stage:#f7f8fa; --stage-2:#e6e9ee; --board:#d9dde3;
+  --gold:#b48a2b; --gold-soft:#f3e8c6; --led:#2f8cff; --led-soft:#dbeaff;
+  --ok:#1f9d61; --warn:#c7791c; --bad:#c23b3b; --water:#4aa8ea;
+  --wood-a:#cfa97c; --wood-b:#b78a5c; --carpet:#dccfb8; --tile:#dfe3e7; --fabric:#cdb998; --fabric-2:#bfa884;
+  --font-display:'Sora','Noto Sans Georgian',system-ui,sans-serif; --font-body:'IBM Plex Sans','Noto Sans Georgian',system-ui,sans-serif; --font-mono:'IBM Plex Mono','Noto Sans Georgian',ui-monospace,SFMono-Regular,monospace;
+  --radius:14px; --shadow:0 1px 2px rgba(20,24,32,.05),0 10px 28px -14px rgba(20,24,32,.22);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1115; --surface:#171a20; --surface-2:#20242c; --fg:#e8eaee; --muted:#9aa3b0; --line:#2a2f38;
+  --stage:#2b313a; --stage-2:#1f252d; --board:#3a424c;
+  --gold:#d9b35b; --gold-soft:#3a3222; --led:#5ab0ff; --led-soft:#172a44;
+  --ok:#3ccf85; --warn:#f0a53c; --bad:#ef6b6b; --water:#5bb4f0;
+  --wood-a:#8c6a45; --wood-b:#6d5035; --carpet:#6a6355; --tile:#3c424a; --fabric:#7d6c52; --fabric-2:#6a5a44; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#20242c; --fg:#e8eaee; --muted:#9aa3b0; --line:#2a2f38;
+  --stage:#2b313a; --stage-2:#1f252d; --board:#3a424c;
+  --gold:#d9b35b; --gold-soft:#3a3222; --led:#5ab0ff; --led-soft:#172a44;
+  --ok:#3ccf85; --warn:#f0a53c; --bad:#ef6b6b; --water:#5bb4f0;
+  --wood-a:#8c6a45; --wood-b:#6d5035; --carpet:#6a6355; --tile:#3c424a; --fabric:#7d6c52; --fabric-2:#6a5a44; color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;padding-block:0 48px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:20px;font-weight:700;line-height:1.1}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:600;line-height:1.2}
+h3{font-size:16px;font-weight:600}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:saturate(1.3) blur(12px);-webkit-backdrop-filter:saturate(1.3) blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:1px;min-width:0}
+.chapters{display:flex;gap:4px;flex-wrap:wrap}
+.chapters a{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.chapters a:hover{color:var(--fg);background:var(--surface-2)}
+.chapters a.active{color:var(--fg);border-color:var(--line);background:var(--surface)}
+.hero{padding-block:28px 8px;display:flex;flex-direction:column;gap:18px}
+.hero h2{font-size:clamp(26px,3.4vw,38px)}
+section.ch{padding-block:44px 6px}
+.ch-head{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.ch-head .num{font-family:var(--font-mono);font-size:12px;color:var(--gold);letter-spacing:.08em}
+.lede{color:var(--muted);max-width:64ch}
+.duo{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:880px){.duo{grid-template-columns:1fr}}
+.stage{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.stage svg{display:block;width:100%;height:auto}
+.stage .hint{position:absolute;left:12px;top:10px;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:4px 8px;border-radius:6px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel h3{font-size:17px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.steps li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:10px 12px;border-radius:10px;border:1px solid transparent;color:var(--muted);font-size:14px;line-height:1.45}
+.steps li[data-step]{display:block;padding:0}
+.steps li[data-step]>button{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:10px 12px;width:100%;text-align:left;background:none;border:0;border-radius:10px;color:inherit;font:inherit;line-height:inherit;cursor:pointer}
+.steps li[data-step]>button:focus-visible{outline:2px solid var(--led);outline-offset:-2px}
+.steps li .n{font-family:var(--font-mono);font-size:12px;color:var(--gold);padding-top:2px}
+.steps li b{display:block;color:var(--fg);font-weight:600}
+.steps li.active{background:var(--surface-2);border-color:var(--line);color:var(--fg)}
+.steps li.done .n{color:var(--ok)}
+.steps li[data-step]:hover{background:var(--surface-2)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--font-display);font-weight:600;font-size:14px;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.hold{touch-action:none;user-select:none;-webkit-user-select:none}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.primary:hover{opacity:.9;background:var(--fg)}
+.btn.hold.on{background:var(--led-soft);border-color:var(--led)}
+.btn.toggle.on{background:var(--gold-soft);border-color:var(--gold)}
+.btn:focus-visible,.chip:focus-visible,.steps li:focus-visible,.tab:focus-visible,.seg button:focus-visible,.chapters a:focus-visible{outline:2px solid var(--led);outline-offset:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--font-body);font-size:14px;font-weight:500;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.chip:hover{background:var(--surface-2)}
+.chip.active{border-color:var(--gold);background:var(--gold-soft)}
+.chip .sw{width:10px;height:10px;border-radius:3px;background:var(--muted);flex:none}
+.note{border-left:3px solid var(--gold);padding:8px 12px;background:var(--surface-2);border-radius:0 8px 8px 0;font-size:14px}
+.note.warn{border-color:var(--bad)}
+.note.ok{border-color:var(--ok)}
+.note.info{border-color:var(--led)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14px;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-variant-numeric:tabular-nums}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line)}
+.specs div{padding:12px 16px;background:var(--surface);min-width:0}
+.specs b{display:block;font-family:var(--font-mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.specs span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.grid-parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.part{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.part .ico{height:116px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--stage),var(--stage-2));border-radius:10px;border:1px solid var(--line)}
+.part .ico svg{max-height:100px;max-width:92%;height:100px;width:auto}
+.part h3{font-size:15px}.part p{font-size:13px;color:var(--muted)}
+.part .tag{font-family:var(--font-mono);font-size:11px;color:var(--gold);letter-spacing:.06em}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--font-display);font-weight:600;font-size:12.5px;color:var(--muted);letter-spacing:.02em}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.tablewrap table{min-width:720px}
+.y{color:var(--ok);font-weight:600}.n{color:var(--bad);font-weight:600}.m{color:var(--warn);font-weight:600}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font-family:var(--font-display);font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.tab:hover{color:var(--fg);background:var(--surface-2)}
+.tab.active{color:var(--fg);border-color:var(--gold);background:var(--gold-soft)}
+.display-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;align-items:center;justify-items:center}
+.display-wrap .readout{justify-self:stretch}
+.display-wrap svg{width:220px;height:220px;display:block}
+.readout{display:flex;flex-direction:column;gap:10px;width:100%}
+.readout .status{font-family:var(--font-display);font-weight:600;font-size:17px}
+.readout .big{font-family:var(--font-mono);font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font-family:var(--font-display);font-weight:600;font-size:13px;padding:8px 12px;border:0;background:var(--surface);color:var(--muted);cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.active{background:var(--gold-soft);color:var(--fg)}
+.lang button{padding:6px 10px;font-size:12.5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card b{font-family:var(--font-display);font-weight:600}
+.card p{font-size:14px;color:var(--muted)}
+.card .mono{font-family:var(--font-mono);font-size:13px;color:var(--gold)}
+.safety .card{gap:8px}
+.safety .ch-ico{width:30px;height:30px;color:var(--gold)}
+.safety .ch-ico svg{width:30px;height:30px;display:block}
+.safety ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--fg)}
+.safety li::marker{color:var(--muted)}
+footer{color:var(--muted);font-size:13px;padding-block:36px 0;display:flex;flex-direction:column;gap:8px}
+footer ul{margin:0;padding-left:18px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:640px){.stage .labels,.stage .hint{display:none}}
+.lbl{outline:none}.lbl:focus-visible text{fill:var(--led)!important;text-decoration:underline}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="eyebrow">Dreame cordless vacuum with spin mop head</span>
+      <h1>R10 Pro Aqua</h1>
+    </div>
+    <nav class="chapters" aria-label="Chapters">
+      <a href="#box">Box</a><a href="#assemble">Assemble</a><a href="#heads">Heads</a><a href="#use">Use</a><a href="#mop">Mop</a><a href="#clean">Clean</a><a href="#fix">Fix</a><a href="#safety">Safety</a>
+    </nav>
+    <div class="seg lang" id="lang" role="group" aria-label="Language"><button type="button" data-l="ka" class="active" aria-pressed="true" lang="ka">ქართული</button><button type="button" data-l="en" aria-pressed="false" lang="en">EN</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="duo">
+      <div class="stage" id="st-hero"><span class="hint">Tap a part name</span></div>
+      <div class="panel">
+        <span class="eyebrow">Interactive guide</span>
+        <h2>Everything you do with this vacuum, animated.</h2>
+        <p class="lede">Assembly, which head goes on which floor, the trigger and the three power modes, the spin mop, and the cleaning routine that keeps suction strong. Built from Dreame's published manuals and product pages for the R10 Pro Aqua (model VZV15A).</p>
+        <div class="btnrow"><a class="btn primary" href="#assemble">Start with assembly</a><a class="btn" href="#heads">Which head do I use?</a><a class="btn" href="#safety">Safety rules</a></div>
+      </div>
+    </div>
+    <div class="specs" aria-label="Key figures">
+      <div><b>150 AW</b><span>Suction</span></div>
+      <div><b>600 ml</b><span>Dust cup</span></div>
+      <div><b>200 ml</b><span>Mop water tank</span></div>
+      <div><b>≈ 90 min</b><span>Runtime in Eco</span></div>
+      <div><b>≈ 4 h</b><span>Full charge</span></div>
+      <div><b>2500 mAh</b><span>Removable battery</span></div>
+    </div>
+  </section>
+
+  <section class="ch" id="box">
+    <div class="ch-head"><span class="num">01 — IN THE BOX</span><h2>Eleven things come out of the box.</h2><p class="lede">Check them off before you start. The two heads that touch the floor are the multi-surface brush and the spin mop head. The three small tools click straight onto the body for handheld cleaning.</p></div>
+    <div class="grid-parts" id="parts"></div>
+  </section>
+
+  <section class="ch" id="assemble">
+    <div class="ch-head"><span class="num">02 — ASSEMBLE</span><h2>Three clicks and a charge.</h2><p class="lede">Every joint on this vacuum locks with an audible click and releases with a grey button. Press play, or tap a step to jump to it.</p></div>
+    <div class="duo">
+      <div class="stage" id="st-asm"></div>
+      <div class="panel">
+        <div class="btnrow"><button class="btn primary" id="asm-play">▶ Play assembly</button><button class="btn" id="asm-reset">Reset</button></div>
+        <ol class="steps" id="asm-steps">
+          <li data-step="0"><button type="button"><span class="n">01</span><span><b>Slide the battery onto the grip</b>Push it in under the handle until it clicks. The small release button on the back lets you slide it off again.</span></button></li>
+          <li data-step="1"><button type="button"><span class="n">02</span><span><b>Push the extension rod into the body</b>Line the rod up with the intake under the dust cup and push until it clicks.</span></button></li>
+          <li data-step="2"><button type="button"><span class="n">03</span><span><b>Click the multi-surface brush onto the rod</b>Push the rod into the neck of the brush until it clicks. The neck swivels, so the body can lean while the head stays flat.</span></button></li>
+          <li data-step="3"><button type="button"><span class="n">04</span><span><b>Charge fully before first use</b>Plug the charger into the port on the battery. A full charge takes about 4 hours. The display shows the percentage; the light turns off 5 minutes after 100%.</span></button></li>
+          <li data-step="4"><button type="button"><span class="n">05</span><span><b>Handheld: press the rod release and pull</b>The grey button on the intake frees the rod. Any tool clicks directly onto the body.</span></button></li>
+        </ol>
+        <div class="note">Wall mount: stick the template about 1 m above the floor at the height marked on it, drill two 8 mm holes, add the plugs and screws. Hang the vacuum with the rod and brush attached, never the body alone.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="heads">
+    <div class="ch-head"><span class="num">03 — WHICH HEAD WHERE</span><h2>Pick the surface. The right head attaches itself.</h2><p class="lede">The multi-surface brush does every dry floor. The spin mop head is for sealed hard floors only. The three small tools handle furniture and tight spots.</p></div>
+    <div class="chips" id="surf-chips" role="group" aria-label="Surfaces"></div>
+    <div class="duo" style="margin-top:14px">
+      <div class="stage" id="st-heads"></div>
+      <div class="panel" id="heads-panel"></div>
+    </div>
+    <div class="tablewrap" style="margin-top:18px">
+      <table>
+        <thead><tr><th>Surface</th><th>Multi-surface brush</th><th>Spin mop head</th><th>Motorized mini-brush</th><th>Wide combination tool</th><th>Flexible combination tool</th></tr></thead>
+        <tbody>
+          <tr><td>Wood, laminate, vinyl, tile</td><td class="y">Best · switch OFF</td><td class="y">Yes, for mopping</td><td class="m">Works, slow</td><td class="m">Edges only</td><td class="m">Edges, under furniture</td></tr>
+          <tr><td>Carpet, rugs, play mats</td><td class="y">Best · switch ON</td><td class="n">Never</td><td class="m">Small areas</td><td class="n">No</td><td class="n">No</td></tr>
+          <tr><td>Sofa, mattress, bedding, pet beds</td><td class="n">Too big</td><td class="n">Never</td><td class="y">Best</td><td class="m">Seams and folds</td><td class="m">Seams and folds</td></tr>
+          <tr><td>Shelves, keyboards, lampshades, car</td><td class="n">No</td><td class="n">Never</td><td class="m">Car seats</td><td class="y">Best</td><td class="m">Behind radiators, car seats</td></tr>
+          <tr><td>Corners, skirting, between cushions</td><td class="m">Edge pass</td><td class="n">Never</td><td class="n">No</td><td class="y">Without the brush</td><td class="y">Best for narrow gaps</td></tr>
+          <tr><td>Wet spills, puddles</td><td class="n">Never vacuum liquids</td><td class="m">Damp wipe only, no pools</td><td class="n">Never</td><td class="n">Never</td><td class="n">Never</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ch" id="use">
+    <div class="ch-head"><span class="num">04 — USE IT</span><h2>Hold the trigger. Lock it. Pick a mode.</h2><p class="lede">This is a live copy of the display on the back of the motor. Hold the trigger to run, tap the lock to keep running without holding, and cycle the mode button under the screen. Battery drains at demo speed: one second here is one minute of cleaning.</p></div>
+    <div class="duo">
+      <div class="stage" id="st-use"></div>
+      <div class="panel">
+        <div class="display-wrap">
+          <svg viewBox="0 0 240 240" id="disp" role="img" aria-label="Vacuum display simulation">
+            <circle cx="120" cy="120" r="114" fill="#0d0e11" stroke="#2a2b31" stroke-width="4"/>
+            <circle cx="120" cy="120" r="98" fill="none" stroke="#1e2026" stroke-width="7"/>
+            <circle id="d-ring" cx="120" cy="120" r="98" fill="none" stroke="#39d98a" stroke-width="7" stroke-linecap="round" stroke-dasharray="615.75" stroke-dashoffset="0" transform="rotate(-90 120 120)"/>
+            <g id="d-lock" transform="translate(120,64)" opacity=".3"><rect x="-8" y="-1" width="16" height="12" rx="2.5" fill="#dfe6f0"/><path d="M-4.5,-1 v-4.5 a4.5,4.5 0 0 1 9,0 v4.5" fill="none" stroke="#dfe6f0" stroke-width="2.2"/></g>
+            <path id="d-bolt" d="M-5,0 l9,-16 l-2,11 h7 l-9,16 l2,-11 z" transform="translate(66,124)" fill="#39d98a" opacity="0"/>
+            <text id="d-pct" x="118" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="52" fill="#eef5ff">100</text>
+            <text x="170" y="134" font-family="IBM Plex Mono, monospace" font-size="16" fill="#9fb0c4">%</text>
+            <g id="d-segs" transform="translate(120,178)">
+              <rect x="-45" y="-5" width="26" height="10" rx="5" fill="#39d98a"/>
+              <rect x="-13" y="-5" width="26" height="10" rx="5" fill="#1e2026"/>
+              <rect x="19" y="-5" width="26" height="10" rx="5" fill="#1e2026"/>
+            </g>
+            <text id="d-mode" x="120" y="206" text-anchor="middle" font-family="Sora, sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#cfd8e4">ECO</text>
+          </svg>
+          <div class="readout">
+            <div class="status" id="u-status">Stopped</div>
+            <div class="big" id="u-remaining">≈ 90 min left in Eco</div>
+            <div class="btnrow">
+              <button class="btn hold" id="u-trigger" aria-pressed="false">Hold trigger</button>
+              <button class="btn toggle" id="u-lock" aria-pressed="false">Trigger lock</button>
+              <button class="btn" id="u-mode">Mode →</button>
+              <button class="btn toggle" id="u-charge" aria-pressed="false">Plug in charger</button>
+            </div>
+            <p id="u-tip" style="font-size:14px;color:var(--muted)">Eco: quietest and longest. Daily hard floors and light dust.</p>
+          </div>
+        </div>
+        <ul class="steps" style="font-size:14px">
+          <li><span class="n">▸</span><span><b>Hold to run, release to stop.</b> That is the whole on/off logic. Tap the lock while running and the vacuum keeps going with your finger off the trigger; tap it again to go back.</span></li>
+          <li><span class="n">▸</span><span><b>Mode button sits under the screen.</b> Each tap cycles Eco → Standard → Turbo. The display shows the level and the battery percentage.</span></li>
+          <li><span class="n">▸</span><span><b>Slow overlapping passes beat fast ones.</b> Let the roller and the front LEDs do the work. On carpet, flip the brush switch on.</span></li>
+          <li><span class="n">▸</span><span><b>It stops itself for a reason.</b> A stuck roller or a hot motor shuts the vacuum off. Clear the jam or wait for it to cool, then continue. After long Turbo runs, let it cool 30 minutes before charging.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="mop">
+    <div class="ch-head"><span class="num">05 — MOP</span><h2>Vacuum and mop in one pass, on hard floors only.</h2><p class="lede">The spin mop head carries a 200 ml tank and two rotating pads at 116 rpm. It suits linoleum, laminate, parquet and tile. Keep it off carpet and rugs.</p></div>
+    <div class="duo">
+      <div class="stage" id="st-mop"></div>
+      <div class="panel">
+        <div class="btnrow"><button class="btn primary" id="mop-play">▶ Play mopping</button><button class="btn" id="mop-reset">Reset</button></div>
+        <ol class="steps" id="mop-steps">
+          <li data-step="0"><button type="button"><span class="n">01</span><span><b>Dampen the pads and wring them out</b>Line the centre hole of each pad up with the rotating plate and press it on firmly. Use only Dreame pads.</span></button></li>
+          <li data-step="1"><button type="button"><span class="n">02</span><span><b>Fill the tank with clean water</b>Lift the plug on top, pour, close. No detergent, no chemicals: they damage the tank.</span></button></li>
+          <li data-step="2"><button type="button"><span class="n">03</span><span><b>Click the mop head onto the rod</b>Same neck as the brush. Push until it clicks.</span></button></li>
+          <li data-step="3"><button type="button"><span class="n">04</span><span><b>Press the trigger and glide</b>The pads spin and water feeds through automatically. The outflow switch on the head turns the water feed on and off.</span></button></li>
+        </ol>
+        <div class="btnrow"><span style="font-size:14px;color:var(--muted)">Outflow</span><div class="seg" id="mop-flow"><button data-f="0" aria-pressed="false">Off</button><button data-f="1" class="active" aria-pressed="true">On</button></div></div>
+        <div class="note warn">Never mop carpet, rugs or play mats. Do not step on the mop head. Empty the tank and set the outflow to Off before storing it.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="clean">
+    <div class="ch-head"><span class="num">06 — CLEAN &amp; CARE</span><h2>Suction lives or dies on five minutes of care.</h2><p class="lede">Everything washable is rinsed with plain water and air-dried for 24 hours before it goes back in. Nothing gets detergent, and the body, the brush motors and the battery never get wet.</p></div>
+    <div class="tabs" id="clean-tabs" role="group" aria-label="Care topics"></div>
+    <div class="duo" style="margin-top:14px">
+      <div class="stage" id="st-clean"></div>
+      <div class="panel" id="clean-panel"></div>
+    </div>
+    <h3 style="margin-top:22px;margin-bottom:10px">Maintenance calendar</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>When</th><th>What</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td>After every session</td><td>Dust cup · mop pads · tank</td><td>Empty the cup over a bin. Peel the pads off, rinse, hang to dry. Pour out leftover water.</td></tr>
+          <tr><td>Monthly</td><td>Dust cup · roller</td><td>Wipe the cup with a damp, well-wrung cloth. Check the roller and cut off any hair.</td></tr>
+          <tr><td>Every 3 months</td><td>Pre-filter · stored battery</td><td>Rinse the metal pre-filter, dry 24 h. If the vacuum sits unused, recharge it so the battery never fully drains.</td></tr>
+          <tr><td>Every 4–6 months</td><td>HEPA filter</td><td>Pull it out of the exhaust cap, rinse under clean water while turning it, tap out the water, dry 24 h.</td></tr>
+          <tr><td>Every 6 months</td><td>Cyclone assembly</td><td>Lift it out of the cup, rinse until clear, dry 24 h before reassembly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ch" id="fix">
+    <div class="ch-head"><span class="num">07 — FIX</span><h2>When something is off.</h2><p class="lede">Most problems are a blockage, a full cup or a hot battery. Work down this list before calling support.</p></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>What you see</th><th>Likely cause</th><th>What to do</th></tr></thead>
+        <tbody>
+          <tr><td>Nothing happens on the trigger</td><td>Battery empty, or the charger is still connected</td><td>Charge fully. Unplug before use; it will not run while charging.</td></tr>
+          <tr><td>Starts, then stops within seconds</td><td>Clogged filter, nozzle or rod; overheat protection</td><td>Empty the cup, check the rod and the head for a blockage, let it cool, try again.</td></tr>
+          <tr><td>Weak suction</td><td>Cup at MAX, dirty filters, blocked attachment</td><td>Empty the cup. Rinse the pre-filter and HEPA, dry 24 h. Clear the attachment.</td></tr>
+          <tr><td>Roller does not spin</td><td>Hair wrapped around it, or an object jammed</td><td>Power off, unlock the roller, cut the hair, remove the object.</td></tr>
+          <tr><td>Strange motor noise</td><td>Blockage in the main intake or rod</td><td>Detach the rod and look through it. Remove whatever is stuck.</td></tr>
+          <tr><td>Indicator solid red after power-on</td><td>Battery pack fault</td><td>Contact Dreame after-sales.</td></tr>
+          <tr><td>Indicator blinks red while charging</td><td>Wrong or incompatible charger</td><td>Use the original Dreame charger only.</td></tr>
+          <tr><td>Charging is very slow</td><td>Battery too hot or too cold</td><td>Charge between 0 and 40 °C. After Turbo, wait 30 minutes.</td></tr>
+          <tr><td>Front LEDs stay dark</td><td>LED fault</td><td>Contact Dreame after-sales.</td></tr>
+          <tr><td>Mop leaves no water</td><td>Outflow set to Off, tank empty, pads dry</td><td>Switch the outflow on, refill with clean water, pre-dampen the pads.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ch" id="safety">
+    <div class="ch-head"><span class="num">08 — SAFETY</span><h2>The manual's warnings, in one place.</h2><p class="lede">Everything the safety pages say, grouped by situation. The short version: dry floors only, nothing hot or sharp, the original charger, and no water near anything with a motor.</p></div>
+    <div class="cards safety">
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.5l2.5 2.5L16 9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b>Before you start</b><ul><li>Dry indoor floors only. Never outdoors, in a bathroom or near a pool.</li><li>Look over the battery and the charger before use. If either is damaged, do not use it.</li><li>Brushes, dust cup and filter must be fitted properly before you switch on.</li><li>Clear the floor of large paper, plastic sheeting and anything sharp or bigger than the openings.</li><li>Home use only, with Dreame accessories only.</li></ul></div>
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><b>Never vacuum</b><ul><li>Liquids of any kind: water, drinks, petrol, bleach, ammonia, drain cleaner.</li><li>Anything hot or smoking: fireplace ash, coal, cigarette butts, matches.</li><li>Sharp or hard objects: glass, nails, screws, coins.</li><li>Drywall dust and fine building debris.</li></ul></div>
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V6.5a1.5 1.5 0 013 0V11m0-6a1.5 1.5 0 013 0v6m0-4.5a1.5 1.5 0 013 0V13m0-1a1.5 1.5 0 013 0v3.5A5.5 5.5 0 0113.5 21h-1.2a5.5 5.5 0 01-4.6-2.5L4.6 13.6a1.4 1.4 0 012.3-1.6L7 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b>Hands, hair and kids</b><ul><li>Keep hair, loose clothing and fingers away from the openings and the spinning roller.</li><li>Never point the rod or a tool at eyes, ears or mouth.</li><li>Not a toy. Children from 8 and anyone with reduced abilities only under supervision; a child never cleans or maintains it alone.</li><li>Take extra care on stairs.</li><li>Do not lean it against a chair or table where it can fall over.</li></ul></div>
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="19.5" y="10" width="2" height="4" rx=".6" fill="currentColor"/><path d="M12 9l-2.2 3.2H12L10.8 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b>Battery and charging</b><ul><li>Only the original Dreame charger and battery pack. Others can make the lithium battery catch fire.</li><li>Charge, use and store between 0 and 40 °C.</li><li>After long Turbo use, let it cool 30 minutes before charging.</li><li>It will not run while plugged in. Unplug before use, and unplug before any cleaning or maintenance.</li><li>Not using it for a while? Charge fully, unplug, store cool and dry, and top up every 3 months.</li></ul></div>
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 10l-2.5 3.5H13L11.5 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b>Water and electricity</b><ul><li>The body, both brush heads, the battery and the metal contact pins conduct electricity: never put them in water, and never touch them or the charger with wet hands.</li><li>Only the filters, cyclone, pre-filter, brush rollers and mop pads go under the tap, and they dry for 24 hours before going back.</li><li>Clean water only in the mop tank. No detergent, no chemicals, and no fragrance on the filter: that is a fire hazard.</li><li>Do not step on the mop head, and use only Dreame pads.</li></ul></div>
+      <div class="card"><div class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5L21 19.5H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.5v4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.1" fill="currentColor"/></svg></div><b>If something goes wrong</b><ul><li>A jammed roller or a hot motor shuts the vacuum off by itself. Remove the object or wait for it to cool, then carry on.</li><li>Dropped or damaged? Stop using it and contact Dreame service. Never open the body yourself.</li><li>Battery leaking or fuming: leave the room until it cools and the fumes clear, ventilate, avoid skin and eye contact, do not breathe the vapour.</li><li>End of life: remove the battery pack and hand both it and the vacuum to an electrical-waste collection point, never household rubbish.</li></ul></div>
+    </div>
+    <div class="note info" style="margin-top:14px">Wording follows Dreame's R10 Pro and R10S Slim Aqua manuals. Your printed manual is the authority if it says something different.</div>
+  </section>
+
+  <footer>
+    <span class="eyebrow">Sources and notes</span>
+    <ul>
+      <li>Dreame product pages and images for the R10 Pro Aqua (figures: 150 AW, 600 ml cup, 200 ml tank, 116 rpm pads, 2500 mAh, about 90 min Eco, about 4 h charge; roller design; HEPA filter behind the front exhaust cap): <a href="https://am.dreametech.com/en/product/dreame-r10-pro-aqua/" target="_blank" rel="noopener">am.dreametech.com</a>, <a href="https://ge.dreametech.com/en/?p=30280" target="_blank" rel="noopener">ge.dreametech.com</a>.</li>
+      <li>Dreame user manuals for the R10 Pro (body, brush, filters, FAQ) and the R10S Slim Aqua (spin mop head procedure and warnings), via <a href="https://global.dreametech.com/pages/user-manuals-and-faqs" target="_blank" rel="noopener">global.dreametech.com</a>. The R10 Pro Aqua printed manual (VZV15A) is not published as text online; where it differs, follow the paper manual in your box.</li>
+      <li>Illustrations are schematic, not to scale. Runtime figures are Dreame's maximums under ideal conditions.</li>
+    </ul>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function(){
+'use strict';
+if (!window.gsap) { document.querySelectorAll('.stage').forEach(s=>s.innerHTML='<p style="padding:24px;color:var(--muted)">Animation library did not load.</p>'); return; }
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+const W=900, H=600, FLOOR=540, HX=300, TILT=35, ROD=280;
+const CONTACT={brush:59, mop:68};
+const SCALE_K = (svg)=>Math.min(2.2, Math.max(1, 640/Math.max(320, (svg.getBoundingClientRect().width||900))));
+const SCALE=0.92;
+const TIP={mini:66, combo:98, flex:160};
+const RAD=Math.PI/180;
+const sv = (p)=>`style="fill:var(${p})"`;
+const S2G=(x,y,ox,oy,tt=TILT,s=1)=>{const c=Math.cos(tt*RAD), si=Math.sin(tt*RAD); return [ox + s*(x*c - y*si), oy + s*(x*si + y*c)];};
+/* ---------- i18n ---------- */
+const KA_RAW = {"Safety": "უსაფრთხოება", "Safety rules": "უსაფრთხოების წესები", "08 — SAFETY": "08 — უსაფრთხოება", "The manual's warnings, in one place.": "ინსტრუქციის გაფრთხილებები, ერთ ადგილას.", "Everything the safety pages say, grouped by situation. The short version: dry floors only, nothing hot or sharp, the original charger, and no water near anything with a motor.": "ყველაფერი, რასაც უსაფრთხოების გვერდები ამბობს, სიტუაციების მიხედვით. მოკლედ: მხოლოდ მშრალი იატაკი, არაფერი ცხელი და ბასრი, ორიგინალი დამტენი, და წყალი — ძრავიან ნაწილებთან არასდროს.", "Before you start": "დაწყებამდე", "Dry indoor floors only. Never outdoors, in a bathroom or near a pool.": "მხოლოდ მშრალი იატაკი შენობაში. არასდროს გარეთ, სააბაზანოში ან აუზთან.", "Look over the battery and the charger before use. If either is damaged, do not use it.": "გამოყენებამდე დაათვალიერეთ აკუმულატორი და დამტენი. თუ რომელიმე დაზიანებულია, არ გამოიყენოთ.", "Brushes, dust cup and filter must be fitted properly before you switch on.": "ჩართვამდე ჯაგრისები, მტვრის კონტეინერი და ფილტრი სწორად უნდა იყოს დამაგრებული.", "Clear the floor of large paper, plastic sheeting and anything sharp or bigger than the openings.": "იატაკიდან აიღეთ დიდი ქაღალდი, პოლიეთილენი და ყველაფერი ბასრი ან ხვრელებზე დიდი.", "Home use only, with Dreame accessories only.": "მხოლოდ საოჯახო გამოყენებისთვის, მხოლოდ Dreame-ის აქსესუარებით.", "Never vacuum": "არასდროს შეისრუტოთ", "Liquids of any kind: water, drinks, petrol, bleach, ammonia, drain cleaner.": "ნებისმიერი სითხე: წყალი, სასმელი, ბენზინი, მათეთრებელი, ამიაკი, მილების საწმენდი.", "Anything hot or smoking: fireplace ash, coal, cigarette butts, matches.": "ყველაფერი ცხელი ან მბოლავი: ბუხრის ნაცარი, ნახშირი, სიგარეტის ნამწვი, ასანთი.", "Sharp or hard objects: glass, nails, screws, coins.": "ბასრი ან მაგარი საგნები: მინა, ლურსმანი, ჭანჭიკი, მონეტა.", "Drywall dust and fine building debris.": "თაბაშირ-მუყაოს მტვერი და წვრილი სამშენებლო ნარჩენები.", "Hands, hair and kids": "ხელები, თმა და ბავშვები", "Keep hair, loose clothing and fingers away from the openings and the spinning roller.": "თმა, თავისუფალი ტანსაცმელი და თითები ხვრელებსა და მბრუნავ ლილვაკს მოარიდეთ.", "Never point the rod or a tool at eyes, ears or mouth.": "მილი ან საქშენი არასდროს მიმართოთ თვალების, ყურების ან პირისკენ.", "Not a toy. Children from 8 and anyone with reduced abilities only under supervision; a child never cleans or maintains it alone.": "სათამაშო არ არის. 8 წლიდან ბავშვები და შეზღუდული შესაძლებლობის პირები მხოლოდ მეთვალყურეობით; ბავშვი მას მარტო არასდროს წმენდს და არ უვლის.", "Take extra care on stairs.": "კიბეებზე განსაკუთრებით ფრთხილად იყავით.", "Do not lean it against a chair or table where it can fall over.": "სკამს ან მაგიდას ნუ მიაყუდებთ, საიდანაც შეიძლება წაიქცეს.", "Battery and charging": "აკუმულატორი და დატენვა", "Only the original Dreame charger and battery pack. Others can make the lithium battery catch fire.": "მხოლოდ ორიგინალი Dreame-ის დამტენი და აკუმულატორი. სხვამ შეიძლება ლითიუმის აკუმულატორს ცეცხლი წაუკიდოს.", "Charge, use and store between 0 and 40 °C.": "დატენეთ, გამოიყენეთ და შეინახეთ 0-დან 40 °C-მდე.", "After long Turbo use, let it cool 30 minutes before charging.": "ხანგრძლივი ტურბოს შემდეგ დატენვამდე 30 წუთი გააგრილეთ.", "It will not run while plugged in. Unplug before use, and unplug before any cleaning or maintenance.": "დამტენზე მიერთებული არ იმუშავებს. გამოყენებამდე გამოაერთეთ, და გამოაერთეთ ნებისმიერი წმენდისა თუ მოვლის წინ.", "Not using it for a while? Charge fully, unplug, store cool and dry, and top up every 3 months.": "დიდხანს არ იყენებთ? სრულად დატენეთ, გამოაერთეთ, შეინახეთ გრილ და მშრალ ადგილას და 3 თვეში ერთხელ შეავსეთ.", "Water and electricity": "წყალი და ელექტრობა", "The body, both brush heads, the battery and the metal contact pins conduct electricity: never put them in water, and never touch them or the charger with wet hands.": "კორპუსი, ორივე ჯაგრისი, აკუმულატორი და ლითონის კონტაქტები დენს ატარებს: წყალში არასდროს ჩადოთ და სველი ხელით არც მათ, არც დამტენს არ შეეხოთ.", "Only the filters, cyclone, pre-filter, brush rollers and mop pads go under the tap, and they dry for 24 hours before going back.": "ონკანის ქვეშ მხოლოდ ფილტრები, ციკლონი, წინასწარი ფილტრი, ჯაგრისის ლილვაკები და მოპის ბალიშები მიდის, და დაბრუნებამდე 24 საათი შრება.", "Clean water only in the mop tank. No detergent, no chemicals, and no fragrance on the filter: that is a fire hazard.": "მოპის ავზში მხოლოდ სუფთა წყალი. არც სარეცხი საშუალება, არც ქიმიკატები, და ფილტრზე არავითარი არომატიზატორი: ეს ხანძრის საფრთხეა.", "Do not step on the mop head, and use only Dreame pads.": "მოპის თავაკზე ფეხი არ დაადგათ და მხოლოდ Dreame-ის ბალიშები გამოიყენეთ.", "If something goes wrong": "თუ რამე არასწორად წავიდა", "A jammed roller or a hot motor shuts the vacuum off by itself. Remove the object or wait for it to cool, then carry on.": "გაჭედილი ლილვაკი ან გახურებული ძრავა მტვერსასრუტს თავად თიშავს. ამოიღეთ საგანი ან დაელოდეთ გაგრილებას და გააგრძელეთ.", "Dropped or damaged? Stop using it and contact Dreame service. Never open the body yourself.": "დაგივარდათ ან დაზიანდა? შეწყვიტეთ გამოყენება და დაუკავშირდით Dreame-ის სერვისს. კორპუსი თავად არასდროს გახსნათ.", "Battery leaking or fuming: leave the room until it cools and the fumes clear, ventilate, avoid skin and eye contact, do not breathe the vapour.": "აკუმულატორი ჟონავს ან ბოლავს: დატოვეთ ოთახი, სანამ გაგრილდება და ორთქლი გაიფანტება, განიავეთ, კანსა და თვალებთან კონტაქტს მოერიდეთ, ორთქლი არ ჩაისუნთქოთ.", "End of life: remove the battery pack and hand both it and the vacuum to an electrical-waste collection point, never household rubbish.": "სიცოცხლის ბოლოს: ამოიღეთ აკუმულატორი და ის და მტვერსასრუტიც ელექტრონარჩენების მიმღებ პუნქტს ჩააბარეთ, არასდროს — საყოფაცხოვრებო ნაგავში.", "Wording follows Dreame's R10 Pro and R10S Slim Aqua manuals. Your printed manual is the authority if it says something different.": "ფორმულირებები მიჰყვება Dreame-ის R10 Pro და R10S Slim Aqua ინსტრუქციებს. თუ თქვენი ბეჭდური ინსტრუქცია სხვას ამბობს, ის არის ავტორიტეტი.", "Eleven things come out of the box.": "ყუთიდან თერთმეტი ნივთი ამოდის.", "Check them off before you start. The two heads that touch the floor are the multi-surface brush and the spin mop head. The three small tools click straight onto the body for handheld cleaning.": "დაწყებამდე გადაამოწმეთ ყველა. იატაკს ორი თავაკი ეხება: მრავალზედაპირიანი ჯაგრისი და მბრუნავი მოპის თავაკი. სამი პატარა საქშენი ხელის რეჟიმში წმენდისთვის პირდაპირ კორპუსზე მაგრდება.", "The multi-surface brush does every dry floor. The spin mop head is for sealed hard floors only. The three small tools handle furniture and tight spots.": "მრავალზედაპირიანი ჯაგრისი ყველა მშრალ იატაკს წმენდს. მბრუნავი მოპის თავაკი მხოლოდ დალუქული მყარი იატაკისთვისაა. სამი პატარა საქშენი ავეჯსა და ვიწრო ადგილებს უვლის.", "Bristles for dusting shelves, keyboards and blinds. The small button on its side releases the brush; with the bristles out of the way it works as a wide nozzle for corners and car interiors.": "ჯაგარი თაროების, კლავიატურისა და ჟალუზების მტვრისთვის. გვერდითა პატარა ღილაკი ჯაგრის ფიქსატორია; ჯაგრის გარეშე ფართო საქშენია კუთხეებისა და მანქანის სალონისთვის.", "Flexible combination tool": "მოქნილი კომბინირებული საქშენი", "BENDABLE · NARROW GAPS": "მოხრადი · ვიწრო ღრიჭოები", "Long, thin nozzle with a bendable neck and a small brush at the tip. Reaches behind radiators, under car seats and into tight gaps.": "გრძელი, თხელი საქშენი მოხრადი ყელითა და პატარა ჯაგრით წვერზე. სწვდება რადიატორების უკან, მანქანის სავარძლების ქვეშ და ვიწრო ღრიჭოებში.", "Narrow gaps, radiators, car": "ვიწრო ღრიჭოები, რადიატორები, მანქანა", "between seats · behind radiators · window tracks": "სავარძლებს შორის · რადიატორების უკან · ფანჯრის ღარები", "Flexible combination tool, handheld": "მოქნილი კომბინირებული საქშენი, ხელის რეჟიმი", "The long nozzle bends at the neck, so it reaches where the body cannot: between car seats, behind radiators, along window tracks and under low furniture. The small brush at the tip loosens dust before it is sucked in.": "გრძელი საქშენი ყელთან იხრება, ამიტომ იქაც სწვდება, სადაც კორპუსი ვერ: მანქანის სავარძლებს შორის, რადიატორების უკან, ფანჯრის ღარებსა და დაბალი ავეჯის ქვეშ. წვერის პატარა ჯაგარი მტვერს შეწოვამდე აფხვიერებს.", "Standard; Turbo for car mats": "სტანდარტული; ტურბო მანქანის ნოხებისთვის", "Bend the neck first, then short in-and-out strokes": "ჯერ ყელი მოხარეთ, შემდეგ მოკლე შიგნით-გარეთ მოძრაობები", "On the body, or on the rod for high gaps": "კორპუსზე, ან მილზე მაღალი ღრიჭოებისთვის", "Bend it only as far as it goes freely.": "მოხარეთ მხოლოდ იქამდე, სადამდეც თავისუფლად იხრება.", "bendable neck reaches into gaps": "მოხრადი ყელი ღრიჭოებში სწვდება", "Edges, under furniture": "კიდეები, ავეჯის ქვეშ", "Behind radiators, car seats": "რადიატორების უკან, მანქანის სავარძლები", "Best for narrow gaps": "საუკეთესო ვიწრო ღრიჭოებისთვის", "R10 Pro Aqua": "R10 Pro Aqua", "Box": "ყუთი", "Assemble": "აწყობა", "Heads": "თავაკები", "Use": "გამოყენება", "Mop": "მოპი", "Clean": "წმენდა", "Fix": "პრობლემები", "Tap a part name": "დააჭირეთ ნაწილის სახელს", "Interactive guide": "ინტერაქტიული გზამკვლევი", "Everything you do with this vacuum, animated.": "ყველაფერი, რასაც ამ მტვერსასრუტით აკეთებთ — ანიმაციებით.", "Assembly, which head goes on which floor, the trigger and the three power modes, the spin mop, and the cleaning routine that keeps suction strong. Built from Dreame's published manuals and product pages for the R10 Pro Aqua (model VZV15A).": "აწყობა, რომელი თავაკი რომელ იატაკზე, ტრიგერი და სიმძლავრის სამი რეჟიმი, მბრუნავი მოპი და მოვლის რუტინა, რომელიც შეწოვას ძლიერს ინარჩუნებს. შედგენილია Dreame-ის ოფიციალური ინსტრუქციებისა და R10 Pro Aqua-ს (მოდელი VZV15A) პროდუქტის გვერდების მიხედვით.", "Start with assembly": "დაიწყეთ აწყობით", "Which head do I use?": "რომელი თავაკი გამოვიყენო?", "150 AW": "150 AW", "Suction": "შეწოვა", "600 ml": "600 მლ", "Dust cup": "მტვრის კონტეინერი", "200 ml": "200 მლ", "Mop water tank": "მოპის წყლის ავზი", "≈ 90 min": "≈ 90 წთ", "Runtime in Eco": "მუშაობის დრო ეკო რეჟიმში", "≈ 4 h": "≈ 4 სთ", "Full charge": "სრული დატენვა", "2500 mAh": "2500 mAh", "Removable battery": "მოხსნადი აკუმულატორი", "01 — IN THE BOX": "01 — ყუთში", "Ten things come out of the box.": "ყუთიდან ათი ნივთი ამოდის.", "Check them off before you start. The two heads that touch the floor are the multi-surface brush and the spin mop head. The two small tools click straight onto the body for handheld cleaning.": "დაწყებამდე გადაამოწმეთ ყველა. იატაკს ორი თავაკი ეხება: მრავალზედაპირიანი ჯაგრისი და მბრუნავი მოპის თავაკი. ორი პატარა საქშენი ხელის რეჟიმში წმენდისთვის პირდაპირ კორპუსზე მაგრდება.", "Main body": "ძირითადი კორპუსი", "MOTOR · CUP · DISPLAY": "ძრავა · კონტეინერი · ეკრანი", "425 W motor, 600 ml cup with cyclone and metal pre-filter, HEPA filter behind the gold exhaust cap, trigger and round display.": "425 ვტ ძრავა, 600 მლ კონტეინერი ციკლონითა და ლითონის წინასწარი ფილტრით, HEPA ფილტრი ოქროსფერი გამომშვები თავსახურის უკან, ტრიგერი და მრგვალი ეკრანი.", "Battery pack": "აკუმულატორი", "2500 mAh · REMOVABLE": "2500 mAh · მოხსნადი", "Slides onto the bottom of the grip. Release tab and charging port on the back.": "სახელურის ქვედა ნაწილზე ჩამოიცვამს. გამათავისუფლებელი ღილაკი და დასატენი პორტი უკანა მხარესაა.", "Extension rod": "დამაგრძელებელი მილი", "Connects the body to either floor head. Also carries the small tools up to ceilings and curtain rails.": "კორპუსს იატაკის ნებისმიერ თავაკთან აერთებს. პატარა საქშენებით ჭერსა და ფარდის კარნიზებსაც სწვდება.", "Multi-surface brush": "მრავალზედაპირიანი ჯაგრისი", "V-ROLLER · FRONT LEDS": "V-ლილვაკი · წინა LED განათება", "Main floor head for wood, tile and carpet. Switch on top: ON for carpet, OFF for hard floors. Blue LEDs light the path.": "ძირითადი თავაკი ხის იატაკის, კაფელისა და ხალიჩისთვის. ზედა გადამრთველი: ON ხალიჩაზე, OFF მყარ იატაკზე. ლურჯი LED-ები გზას ანათებს.", "Spin mop head": "მბრუნავი მოპის თავაკი", "200 ml TANK · 2 PADS · 116 rpm": "200 მლ ავზი · 2 ბალიში · 116 ბრ/წთ", "Rotating pads with automatic water feed. Sealed hard floors only. Plug and outflow switch on top.": "მბრუნავი ბალიშები წყლის ავტომატური მიწოდებით. მხოლოდ დალუქული მყარი იატაკისთვის. საცობი და წყლის მიწოდების გადამრთველი ზემოთაა.", "Motorized mini-brush": "მოტორიზებული მინი-ჯაგრისი", "SOFT FABRICS": "რბილი ქსოვილები", "Powered roller for sofas, mattresses, bedding, car seats and pet hair. Not for silk.": "მოტორიანი ლილვაკი დივნების, ლეიბების, თეთრეულის, მანქანის სავარძლებისა და ცხოველის ბეწვისთვის. აბრეშუმზე არ გამოიყენოთ.", "Wide combination tool": "ფართო კომბინირებული საქშენი", "DUSTING + CREVICE": "მტვრის წმენდა + ვიწრო ადგილები", "Bristles forward to dust shelves and keyboards. Slide them back for a wide crevice nozzle.": "ჯაგარი წინ — თაროებისა და კლავიატურის მტვრისთვის. უკან გადაწიეთ და ფართო საქშენად იქცევა ვიწრო ადგილებისთვის.", "Spare mop pads": "სათადარიგო მოპის ბალიშები", "1 EXTRA PAIR": "1 დამატებითი წყვილი", "Microfiber pads with a centre hole that locates on the plate. Rinse after use, air dry.": "მიკროფიბრის ბალიშები ცენტრალური ხვრელით, რომელიც ფირფიტაზე ჯდება. გამოყენების შემდეგ გაავლეთ და ჰაერზე გააშრეთ.", "Charger": "დამტენი", "ORIGINAL ONLY": "მხოლოდ ორიგინალი", "Plugs into the port on the battery. Only the Dreame adapter from the box; others can damage the pack.": "აკუმულატორის პორტში ერთვება. მხოლოდ ყუთში ჩადებული Dreame-ის ადაპტერი; სხვამ შეიძლება აკუმულატორი დააზიანოს.", "Wall mount": "კედლის სამაგრი", "2 SCREWS · 2 PLUGS · TEMPLATE": "2 ჭანჭიკი · 2 დუბელი · შაბლონი", "Optional. Hang the vacuum with rod and brush attached, near a socket.": "არასავალდებულო. მტვერსასრუტი მილითა და ჯაგრისით ჩამოკიდეთ, როზეტთან ახლოს.", "02 — ASSEMBLE": "02 — აწყობა", "Three clicks and a charge.": "სამი კლიკი და ერთი დატენვა.", "Every joint on this vacuum locks with an audible click and releases with a grey button. Press play, or tap a step to jump to it.": "ამ მტვერსასრუტის ყველა შეერთება გასაგონი კლიკით იკეტება და ნაცრისფერი ღილაკით იხსნება. დააჭირეთ ჩვენებას ან აირჩიეთ ნაბიჯი.", "▶ Play assembly": "▶ აწყობის ჩვენება", "Reset": "თავიდან", "Slide the battery onto the grip": "ჩამოაცვით აკუმულატორი სახელურს", "Push it in under the handle until it clicks. The small release button on the back lets you slide it off again.": "სახელურის ქვეშ შეაცურეთ, სანამ არ დაწკაპუნდება. უკანა პატარა ღილაკით ისევ მოხსნით.", "Push the extension rod into the body": "ჩადეთ დამაგრძელებელი მილი კორპუსში", "Line the rod up with the intake under the dust cup and push until it clicks.": "მილი მტვრის კონტეინერის ქვეშ მდებარე შემწოვ ხვრელს მიუსადაგეთ და კლიკამდე მიაწექით.", "Click the multi-surface brush onto the rod": "დაამაგრეთ მრავალზედაპირიანი ჯაგრისი მილზე", "Push the rod into the neck of the brush until it clicks. The neck swivels, so the body can lean while the head stays flat.": "მილი ჯაგრისის ყელში კლიკამდე ჩადეთ. ყელი მოძრავია, ამიტომ კორპუსი იხრება, თავაკი კი იატაკზე ბრტყლად რჩება.", "Charge fully before first use": "პირველ გამოყენებამდე სრულად დატენეთ", "Plug the charger into the port on the battery. A full charge takes about 4 hours. The display shows the percentage; the light turns off a few minutes after 100%.": "დამტენი აკუმულატორის პორტში ჩართეთ. სრულ დატენვას დაახლოებით 4 საათი სჭირდება. ეკრანი პროცენტს აჩვენებს; 100%-დან რამდენიმე წუთში განათება ქრება.", "Handheld: press the rod release and pull": "ხელის რეჟიმი: დააჭირეთ მილის გამათავისუფლებელს და გამოაძვრინეთ", "The grey button on the intake frees the rod. Any tool clicks directly onto the body.": "შემწოვ ხვრელთან ნაცრისფერი ღილაკი მილს ათავისუფლებს. ნებისმიერი საქშენი პირდაპირ კორპუსზე მაგრდება.", "Wall mount: stick the template about 95–107 cm above the floor, drill two 8 mm holes, add the plugs and screws. Hang the vacuum with the rod and brush attached, never the body alone.": "კედლის სამაგრი: შაბლონი იატაკიდან დაახლოებით 95–107 სმ სიმაღლეზე მიაკარით, გაბურღეთ ორი 8 მმ ხვრელი, ჩასვით დუბელები და ჭანჭიკები. მტვერსასრუტი მილითა და ჯაგრისით ჩამოკიდეთ, არასდროს — მარტო კორპუსი.", "03 — WHICH HEAD WHERE": "03 — რომელი თავაკი სად", "Pick the surface. The right head attaches itself.": "აირჩიეთ ზედაპირი. სწორი თავაკი თავად დამაგრდება.", "The multi-surface brush does every dry floor. The spin mop head is for sealed hard floors only. The two small tools handle furniture and tight spots.": "მრავალზედაპირიანი ჯაგრისი ყველა მშრალ იატაკს წმენდს. მბრუნავი მოპის თავაკი მხოლოდ დალუქული მყარი იატაკისთვისაა. ორი პატარა საქშენი ავეჯსა და ვიწრო ადგილებს უვლის.", "Hard floors": "მყარი იატაკი", "Carpet & rugs": "ხალიჩები და ნოხები", "Mopping hard floors": "მყარი იატაკის მოპით წმენდა", "Sofa, bed, mattress": "დივანი, საწოლი, ლეიბი", "Shelves, keyboard, corners": "თაროები, კლავიატურა, კუთხეები", "wood · laminate · vinyl · tile": "ხე · ლამინატი · ვინილი · კაფელი", "Multi-surface brush, switch OFF": "მრავალზედაპირიანი ჯაგრისი, გადამრთველი OFF", "The roller's soft silicone paddles lift fine dust off sealed floors without flicking it away, and the front LEDs show the dust you would otherwise miss.": "ლილვაკის რბილი სილიკონის ფირფიტები წვრილ მტვერს დალუქული იატაკიდან ისე იღებს, რომ არ აფანტავს, წინა LED-ები კი იმ მტვერს აჩვენებს, რომელსაც სხვაგვარად ვერ შეამჩნევდით.", "Head": "თავაკი", "Brush switch": "ჯაგრისის გადამრთველი", "OFF": "OFF", "ON": "ON", "Mode": "რეჟიმი", "Eco for daily dust, Standard for crumbs": "ეკო ყოველდღიური მტვრისთვის, სტანდარტული — ნამცეცებისთვის", "Technique": "ტექნიკა", "Slow forward-and-back passes, overlapping by a third": "ნელი წინ-უკან მოძრაობა, მესამედით გადაფარვით", "Keep the floor dry when vacuuming. Wet patches are a job for the mop head, never for the roller.": "მტვრის წმენდისას იატაკი მშრალი უნდა იყოს. სველი ლაქები მოპის თავაკის საქმეა და არასდროს — ლილვაკის.", "also baby play mats": "ასევე ბავშვის სათამაშო ხალიჩები", "Multi-surface brush, switch ON": "მრავალზედაპირიანი ჯაგრისი, გადამრთველი ON", "Switch ON drives the roller's stiff rubber edge into the pile to loosen grit and hair. The V-shaped edges guide hair toward the ends instead of wrapping it around the roller.": "გადამრთველი ON ლილვაკის მაგარ რეზინის კიდეს ხალიჩის ბეწვში ჩააყოლებს და ქვიშასა და თმას აშორებს. V-ფორმის კიდეები თმას ბოლოებისკენ მიმართავს, ლილვაკზე დახვევის ნაცვლად.", "Standard; Turbo for pet hair and ground-in grit": "სტანდარტული; ტურბო ცხოველის ბეწვისა და ჩაჭედილი ჭუჭყისთვის", "Two slow passes at right angles": "ორი ნელი გავლა ერთმანეთის პერპენდიკულარულად", "Never put the spin mop head on carpet, rugs or play mats. The pads soak the fibres while the pump keeps feeding water.": "მბრუნავი მოპის თავაკი არასდროს დადოთ ხალიჩაზე, ნოხსა თუ სათამაშო ხალიჩაზე. ბალიშები ბოჭკოებს ასველებს, ტუმბო კი წყლის მიწოდებას აგრძელებს.", "tile · parquet · laminate · lino": "კაფელი · პარკეტი · ლამინატი · ლინოლეუმი", "Two pads at 116 rpm scrub while the path ahead of them is still vacuumed, so dry crumbs do not turn into mud. Water feeds automatically from the 200 ml tank.": "ორი ბალიში 116 ბრ/წთ სიჩქარით ხეხავს, წინ კი იატაკი ჯერ იწმინდება, ამიტომ მშრალი ნამცეცები ტალახად არ იქცევა. წყალი 200 მლ ავზიდან ავტომატურად მიეწოდება.", "Outflow": "წყლის მიწოდება", "Eco or Standard": "ეკო ან სტანდარტული", "Prep": "მომზადება", "Dampen and wring the pads first": "ბალიშები ჯერ დაასველეთ და გაწურეთ", "Sealed hard floors only. Keep water on Low for wood-based floors and never leave a puddle standing.": "მხოლოდ დალუქული მყარი იატაკისთვის. ხის იატაკზე წყალი დაბალზე დატოვეთ და გუბე არასდროს დატოვოთ.", "pet beds · car seats": "ცხოველის საწოლები · მანქანის სავარძლები", "Motorized mini-brush, handheld": "მოტორიზებული მინი-ჯაგრისი, ხელის რეჟიმი", "The small powered roller agitates fabric so embedded hair and dust mites come loose. Pull the rod off and click the brush straight onto the body.": "პატარა მოტორიანი ლილვაკი ქსოვილს არხევს და ჩაჭედილ თმასა და მტვრის ტკიპებს აშორებს. მოხსენით მილი და ჯაგრისი პირდაპირ კორპუსზე დაამაგრეთ.", "Tool": "საქშენი", "Standard; Turbo for pet beds": "სტანდარტული; ტურბო ცხოველის საწოლებისთვის", "Short strokes with the fabric pulled taut": "მოკლე მოძრაობები, ქსოვილი დაჭიმული", "Avoid": "მოერიდეთ", "Silk and loose weaves": "აბრეშუმსა და თხელ ქსოვილებს", "Not recommended on fragile fabrics such as silk.": "არ არის რეკომენდებული ნაზ ქსოვილებზე, მაგალითად აბრეშუმზე.", "blinds · lampshades · car dash": "ჟალუზები · აბაჟურები · მანქანის პანელი", "Wide combination tool, handheld": "ფართო კომბინირებული საქშენი, ხელის რეჟიმი", "Bristles forward, it dusts keyboards, blinds and bookshelves without scratching. Slide the brush back and it becomes a wide crevice nozzle for corners, skirting and between cushions.": "ჯაგარი წინ — კლავიატურას, ჟალუზებსა და წიგნის თაროებს ნაკაწრების გარეშე წმენდს. ჯაგარი უკან გადაწიეთ და ფართო საქშენად იქცევა კუთხეების, პლინტუსისა და ბალიშებს შორის სივრცისთვის.", "Eco on electronics, Standard elsewhere": "ეკო ელექტრონიკაზე, სტანდარტული — სხვაგან", "Bristles": "ჯაგარი", "Attach": "დამაგრება", "On the body, or on the rod for ceilings": "კორპუსზე, ან მილზე ჭერისთვის", "Put this tool on the rod for ceiling corners and curtain rails.": "ჭერის კუთხეებისა და ფარდის კარნიზებისთვის ეს საქშენი მილზე დაამაგრეთ.", "Surface": "ზედაპირი", "Wood, laminate, vinyl, tile": "ხე, ლამინატი, ვინილი, კაფელი", "Best · switch OFF": "საუკეთესო · გადამრთველი OFF", "Yes, for mopping": "დიახ, მოპით წმენდისთვის", "Works, slow": "მუშაობს, ნელა", "Edges only": "მხოლოდ კიდეები", "Carpet, rugs, play mats": "ხალიჩები, ნოხები, სათამაშო ხალიჩები", "Best · switch ON": "საუკეთესო · გადამრთველი ON", "Never": "არასდროს", "Small areas": "მცირე ფართობი", "No": "არა", "Sofa, mattress, bedding, pet beds": "დივანი, ლეიბი, თეთრეული, ცხოველის საწოლები", "Too big": "ზედმეტად დიდია", "Best": "საუკეთესო", "Seams and folds": "ნაკერები და ნაკეცები", "Shelves, keyboards, lampshades, car": "თაროები, კლავიატურა, აბაჟურები, მანქანა", "Car seats": "მანქანის სავარძლები", "Corners, skirting, between cushions": "კუთხეები, პლინტუსი, ბალიშებს შორის", "Edge pass": "კიდეების გავლა", "Wet spills, puddles": "დაღვრილი სითხე, გუბეები", "Never vacuum liquids": "სითხე არასდროს შეისრუტოთ", "Damp wipe only, no pools": "მხოლოდ ნესტიანი წმენდა, გუბეების გარეშე", "04 — USE IT": "04 — გამოყენება", "Hold the trigger. Lock it. Pick a mode.": "დააჭირეთ ტრიგერს. დააფიქსირეთ. აირჩიეთ რეჟიმი.", "This is a live copy of the display on the back of the motor. Hold the trigger to run, tap the lock to keep running without holding, and cycle the mode button under the screen. Battery drains at demo speed: one second here is one minute of cleaning.": "ეს ძრავის უკანა ეკრანის მოქმედი ასლია. მუშაობისთვის ტრიგერი დაჭერილი გეჭიროთ, ფიქსატორს დააჭირეთ, რომ თითის აღების შემდეგაც იმუშაოს, ხოლო რეჟიმებს ეკრანის ქვეშ მდებარე ღილაკით გადართავთ. აკუმულატორი დემო-სიჩქარით იცლება: აქ ერთი წამი წმენდის ერთი წუთია.", "Stopped": "გაჩერებულია", "Running": "მუშაობს", "continuous": "უწყვეტი", "charging": "იტენება", "demo speed": "დემო-სიჩქარე", "min left in": "წთ დარჩა რეჟიმში:", "Charging. It will not run while plugged in.": "იტენება. დამტენზე მიერთებული არ იმუშავებს.", "Battery empty. Plug in the charger.": "აკუმულატორი დაცარიელდა. ჩართეთ დამტენი.", "Hold trigger": "ტრიგერის დაჭერა", "Trigger lock": "ტრიგერის ფიქსატორი", "Mode →": "რეჟიმი →", "Plug in charger": "დამტენის ჩართვა", "Eco": "ეკო", "Standard": "სტანდარტული", "Turbo": "ტურბო", "Eco: quietest and longest. Daily hard floors and light dust.": "ეკო: ყველაზე ჩუმი და ხანგრძლივი. ყოველდღიური მყარი იატაკი და მსუბუქი მტვერი.", "Standard: the everyday setting for mixed floors, rugs and crumbs.": "სტანდარტული: ყოველდღიური რეჟიმი შერეული იატაკის, ნოხებისა და ნამცეცებისთვის.", "Turbo: short bursts for carpets, pet hair and spills. It heats the battery, so let the vacuum cool for 30 minutes before charging.": "ტურბო: მოკლე ჩართვები ხალიჩების, ცხოველის ბეწვისა და დაღვრილისთვის. აკუმულატორს ათბობს, ამიტომ დატენვამდე 30 წუთი გააგრილეთ.", "Hold to run, release to stop.": "დაჭერა — მუშაობს, აშვება — ჩერდება.", "That is the whole on/off logic. Tap the lock while running and the vacuum keeps going with your finger off the trigger; tap it again to go back.": "ეს არის ჩართვა-გამორთვის მთელი ლოგიკა. მუშაობისას ფიქსატორს დააჭირეთ და მტვერსასრუტი ტრიგერიდან თითის აღების შემდეგაც იმუშავებს; ისევ დააჭირეთ და დაბრუნდება.", "Mode button sits under the screen.": "რეჟიმის ღილაკი ეკრანის ქვეშაა.", "Each tap cycles Eco → Standard → Turbo. The display shows the level and the battery percentage.": "ყოველი დაჭერა ცვლის: ეკო → სტანდარტული → ტურბო. ეკრანი დონესა და აკუმულატორის პროცენტს აჩვენებს.", "Slow overlapping passes beat fast ones.": "ნელი, გადაფარვითი გავლა სწრაფზე უკეთესია.", "Let the roller and the front LEDs do the work. On carpet, flip the brush switch on.": "საქმე ლილვაკსა და წინა LED-ებს მიანდეთ. ხალიჩაზე ჯაგრისის გადამრთველი ჩართეთ.", "It stops itself for a reason.": "თუ თავად გაჩერდა, მიზეზი აქვს.", "A stuck roller or a hot motor shuts the vacuum off. Clear the jam or wait for it to cool, then continue. After long Turbo runs, let it cool 30 minutes before charging.": "გაჭედილი ლილვაკი ან გახურებული ძრავა მტვერსასრუტს თიშავს. გაათავისუფლეთ გაჭედილი ან დაელოდეთ გაგრილებას და გააგრძელეთ. ხანგრძლივი ტურბოს შემდეგ დატენვამდე 30 წუთი გააგრილეთ.", "05 — MOP": "05 — მოპი", "Vacuum and mop in one pass, on hard floors only.": "მტვრის წმენდა და მოპი ერთ გავლაში, მხოლოდ მყარ იატაკზე.", "The spin mop head carries a 200 ml tank and two rotating pads at 116 rpm. It suits linoleum, laminate, parquet and tile. Keep it off carpet and rugs.": "მბრუნავი მოპის თავაკს 200 მლ ავზი და ორი მბრუნავი ბალიში აქვს 116 ბრ/წთ სიჩქარით. შეეფერება ლინოლეუმს, ლამინატს, პარკეტსა და კაფელს. ხალიჩასა და ნოხზე არ გამოიყენოთ.", "▶ Play mopping": "▶ მოპის ჩვენება", "Dampen the pads and wring them out": "დაასველეთ ბალიშები და გაწურეთ", "Line the centre hole of each pad up with the rotating plate and press it on firmly. Use only Dreame pads.": "თითოეული ბალიშის ცენტრალური ხვრელი მბრუნავ ფირფიტას მიუსადაგეთ და მაგრად დააჭირეთ. მხოლოდ Dreame-ის ბალიშები გამოიყენეთ.", "Fill the tank with clean water": "ჩაასხით ავზში სუფთა წყალი", "Lift the plug on top, pour, close. No detergent, no chemicals: they damage the tank and the pump.": "ზედა საცობი ახადეთ, ჩაასხით, დახურეთ. არც სარეცხი საშუალება, არც ქიმიკატები: ისინი ავზსა და ტუმბოს აზიანებს.", "Click the mop head onto the rod": "დაამაგრეთ მოპის თავაკი მილზე", "Same neck as the brush. Push until it clicks.": "იგივე ყელი, რაც ჯაგრისს. კლიკამდე მიაწექით.", "Press the trigger and glide": "დააჭირეთ ტრიგერს და იმოძრავეთ", "The pads spin and water feeds through automatically. Use the outflow switch on the head to set how wet the floor gets.": "ბალიშები ბრუნავს და წყალი ავტომატურად მიეწოდება. თავაკზე წყლის მიწოდების გადამრთველით არეგულირებთ, რამდენად სველი იქნება იატაკი.", "Off": "გამორთ.", "Never mop carpet, rugs or play mats. Do not step on the mop head. Empty the tank and set the outflow to Off before storing it.": "ხალიჩა, ნოხი და სათამაშო ხალიჩა მოპით არასდროს წმინდოთ. მოპის თავაკზე ფეხი არ დაადგათ. შენახვამდე ავზი დაცალეთ და მიწოდება გამორთეთ.", "06 — CLEAN & CARE": "06 — წმენდა და მოვლა", "Suction lives or dies on five minutes of care.": "შეწოვის სიძლიერე ხუთწუთიან მოვლაზეა დამოკიდებული.", "Everything washable is washed with plain water and air-dried for 24 hours before it goes back in. Nothing goes in a dishwasher, nothing gets detergent, and the body and brush motors never get wet.": "ყველაფერი, რაც ირეცხება, უბრალო წყლით ირეცხება და დაბრუნებამდე 24 საათი ჰაერზე შრება. არაფერი არ იდება ჭურჭლის სარეცხ მანქანაში, არაფერს ეხება სარეცხი საშუალება, კორპუსი და ჯაგრისის ძრავები კი არასდროს სველდება.", "Filters & cyclone": "ფილტრები და ციკლონი", "Roller brush": "ლილვაკი", "Mop pads & tank": "მოპის ბალიშები და ავზი", "Battery & storage": "აკუმულატორი და შენახვა", "▶ Play": "▶ ჩვენება", "Empty the cup over a bin": "დაცალეთ კონტეინერი ნაგვის ურნაში", "Power off": "გამორთეთ", "Unplug the charger and keep your finger off the trigger.": "დამტენი გამოაერთეთ და ტრიგერს არ შეეხოთ.", "Hold the cup over the bin": "კონტეინერი ურნის თავზე დაიჭირეთ", "Point the bottom of the dust cup into the bin, low enough that dust does not puff back out.": "კონტეინერის ძირი ურნისკენ მიმართეთ, საკმარისად დაბლა, რომ მტვერი უკან არ ამოვარდეს.", "Press the grey button at the front": "დააჭირეთ წინა ნაცრისფერ ღილაკს", "The bottom lid swings open and everything drops out.": "ქვედა სახურავი იღება და ყველაფერი გადმოცვივა.", "Click the lid shut": "დახურეთ სახურავი კლიკამდე", "Flip it up until it clicks. Do this after every session; suction fades once dust reaches the MAX line.": "ზემოთ აწიეთ, სანამ არ დაწკაპუნდება. ეს ყოველი წმენდის შემდეგ გააკეთეთ; როცა მტვერი MAX ხაზს აღწევს, შეწოვა სუსტდება.", "Once a month, wipe the cup with a damp, well-wrung cloth. The body, the brush motors and the battery never go under water.": "თვეში ერთხელ კონტეინერი ნესტიანი, კარგად გაწურული ნაჭრით გაწმინდეთ. კორპუსი, ჯაგრისის ძრავები და აკუმულატორი წყალში არასდროს ჩაიდება.", "Wash the cyclone, pre-filter and HEPA": "გარეცხეთ ციკლონი, წინასწარი ფილტრი და HEPA", "Pull the dust cup off": "მოხსენით მტვრის კონტეინერი", "Push the cup release and lift the cup away from the body.": "კონტეინერის გამათავისუფლებელს დააჭირეთ და კონტეინერი კორპუსიდან მოხსენით.", "Lift out the cyclone and pre-filter": "ამოიღეთ ციკლონი და წინასწარი ფილტრი", "Lift the cyclone handle, turn it until it stops, pull it out. The metal pre-filter sits on top.": "ციკლონის სახელური აწიეთ, გაჩერებამდე მოატრიალეთ და ამოიღეთ. ლითონის წინასწარი ფილტრი ზემოთ ზის.", "Pull the HEPA filter out of the exhaust cap": "ამოიღეთ HEPA ფილტრი გამომშვები თავსახურიდან", "It lives behind the gold ring at the front of the motor. Pull straight out.": "ის ძრავის წინა ოქროსფერი რგოლის უკანაა. პირდაპირ გამოაძვრინეთ.", "Rinse under clean water": "გაავლეთ სუფთა წყალში", "Turn the HEPA a full circle under the tap and tap out excess water. No detergent, no brushing, no fingers in the pleats.": "HEPA ონკანის ქვეშ სრულად შემოატრიალეთ და ზედმეტი წყალი დაბერტყეთ. არც სარეცხი საშუალება, არც ჯაგრისი, არც თითები ნაკეცებში.", "Air dry 24 hours, then reassemble": "24 საათი ჰაერზე გააშრეთ და ააწყვეთ", "Pre-filter every 3 months, cyclone every 6, HEPA every 4–6. Everything bone dry before it goes back.": "წინასწარი ფილტრი 3 თვეში ერთხელ, ციკლონი — 6-ში, HEPA — 4–6-ში. დაბრუნებამდე ყველაფერი სრულიად მშრალი უნდა იყოს.", "A damp filter grows mould and kills suction. If in doubt, give it another day.": "ნესტიანი ფილტრი ობდება და შეწოვას კლავს. თუ ეჭვი გეპარებათ, კიდევ ერთი დღე დაუთმეთ.", "Free the roller and cut the hair off": "გაათავისუფლეთ ლილვაკი და მოაჭერით თმა", "Turn the lock counterclockwise": "მოატრიალეთ საკეტი საათის ისრის საწინააღმდეგოდ", "The dial on the end of the brush head. Turn until it stops.": "ჯაგრისის თავაკის ბოლოში მდებარე დისკი. გაჩერებამდე მოატრიალეთ.", "Slide the roller out": "გამოაცურეთ ლილვაკი", "Pull it sideways out of the housing.": "კორპუსიდან გვერდულად გამოაძვრინეთ.", "Cut the hair off": "მოაჭერით თმა", "Run scissors along the roller; the V-groove is where hair collects. Wipe the clear cover and the notch with a dry cloth.": "მაკრატელი ლილვაკის გასწვრივ გაატარეთ; თმა V-ღარში გროვდება. გამჭვირვალე სახურავი და ღარი მშრალი ნაჭრით გაწმინდეთ.", "Rinse with clean water": "გაავლეთ სუფთა წყლით", "Only when it is dirty. No soap.": "მხოლოდ მაშინ, როცა ჭუჭყიანია. საპნის გარეშე.", "Stand it upright for 24 hours": "დააყენეთ ვერტიკალურად 24 საათით", "Fully dry before it goes back in, then reverse the steps and turn the lock back.": "დაბრუნებამდე სრულად უნდა გაშრეს; შემდეგ ნაბიჯები უკუღმა გაიმეორეთ და საკეტი უკან მოატრიალეთ.", "Mini-brush roller: use a coin to turn its lock counterclockwise until it clicks, lift the roller out, rinse, dry 24 h, refit in reverse.": "მინი-ჯაგრისის ლილვაკი: მონეტით მოატრიალეთ საკეტი საათის ისრის საწინააღმდეგოდ კლიკამდე, ლილვაკი ამოიღეთ, გაავლეთ, 24 სთ გააშრეთ და უკუღმა ჩასვით.", "Rinse the pads, empty the tank": "გაავლეთ ბალიშები, დაცალეთ ავზი", "Flip the mop head over": "გადააბრუნეთ მოპის თავაკი", "Power off first. Turn the head so the pads face up.": "ჯერ გამორთეთ. თავაკი ისე შეაბრუნეთ, რომ ბალიშები ზემოთ იყოს.", "Peel the pads off": "მოაძრეთ ბალიშები", "They pull straight off the rotating plates.": "მბრუნავი ფირფიტებიდან პირდაპირ მოიხსნება.", "Rinse until the water runs clear": "გაავლეთ, სანამ წყალი სუფთა არ წამოვა", "Plain water. Wring and hang them; a spare pair is in the box so you can rotate.": "უბრალო წყალი. გაწურეთ და ჩამოკიდეთ; ყუთში სათადარიგო წყვილია, რომ მონაცვლეობით გამოიყენოთ.", "Dry fully before refitting": "ხელახლა დამაგრებამდე სრულად გააშრეთ", "Damp pads smell and streak. 24 hours is the safe figure.": "ნესტიანი ბალიშები ყარს და ზოლებს ტოვებს. 24 საათი უსაფრთხო ვადაა.", "Empty the tank, outflow to Off": "დაცალეთ ავზი, მიწოდება — გამორთული", "Before storing for more than a day. Water left standing in the tank clouds it and clogs the feed.": "ერთ დღეზე მეტხანს შენახვამდე. ავზში დარჩენილი წყალი მას ამღვრევს და მიწოდებას აჭედავს.", "Use only Dreame pads: the centre hole and backing are what keep them centred at 116 rpm.": "მხოლოდ Dreame-ის ბალიშები გამოიყენეთ: ცენტრალური ხვრელი და საფუძველი ინარჩუნებს მათ ცენტრში 116 ბრ/წთ-ზე.", "Keep the battery healthy": "შეინარჩუნეთ აკუმულატორი ჯანმრთელი", "Hang it the right way": "სწორად ჩამოკიდეთ", "Rod and brush attached, body never alone on the mount. Near a socket, away from bathrooms and heat.": "მილითა და ჯაგრისით, კორპუსი სამაგრზე მარტო არასდროს. როზეტთან ახლოს, სააბაზანოსა და სითბოსგან მოშორებით.", "Store charged and unplugged": "შეინახეთ დატენილი და გამოერთებული", "Charge to 100%, then disconnect. Cool, dry, out of direct sun.": "100%-მდე დატენეთ და გამოაერთეთ. გრილ, მშრალ ადგილას, პირდაპირი მზისგან მოშორებით.", "Top up every 3 months": "3 თვეში ერთხელ შეავსეთ", "A lithium pack left empty for months may never recover. A quarterly charge prevents it.": "თვეობით დაცარიელებული ლითიუმის აკუმულატორი შეიძლება აღარ აღდგეს. კვარტალში ერთი დატენვა ამას თავიდან აგაცილებთ.", "Mind the temperature": "გაითვალისწინეთ ტემპერატურა", "Charge and use between 0 and 40 °C. After long Turbo runs, give it 30 minutes before plugging in.": "დატენეთ და გამოიყენეთ 0-დან 40 °C-მდე. ხანგრძლივი ტურბოს შემდეგ ჩართვამდე 30 წუთი დაელოდეთ.", "The pack is removable: press the release on its back and slide it off. A worn pack that no longer holds charge is replaced, not repaired.": "აკუმულატორი მოხსნადია: უკანა გამათავისუფლებელს დააჭირეთ და გამოაცურეთ. გაცვეთილი აკუმულატორი, რომელიც მუხტს აღარ იკავებს, იცვლება და არა — რემონტდება.", "Maintenance calendar": "მოვლის კალენდარი", "When": "როდის", "What": "რა", "How": "როგორ", "After every session": "ყოველი წმენდის შემდეგ", "Dust cup · mop pads · tank": "მტვრის კონტეინერი · მოპის ბალიშები · ავზი", "Empty the cup over a bin. Peel the pads off, rinse, hang to dry. Pour out leftover water.": "კონტეინერი ურნაში დაცალეთ. ბალიშები მოაძრეთ, გაავლეთ, გასაშრობად ჩამოკიდეთ. დარჩენილი წყალი გადაასხით.", "Monthly": "ყოველთვიურად", "Dust cup · roller": "მტვრის კონტეინერი · ლილვაკი", "Wipe the cup with a damp, well-wrung cloth. Cut hair off the roller with scissors.": "კონტეინერი ნესტიანი, კარგად გაწურული ნაჭრით გაწმინდეთ. ლილვაკს თმა მაკრატლით მოაჭერით.", "Every 3 months": "3 თვეში ერთხელ", "Pre-filter · stored battery": "წინასწარი ფილტრი · შენახული აკუმულატორი", "Rinse the metal pre-filter, dry 24 h. If the vacuum sits unused, recharge it so the battery never fully drains.": "ლითონის წინასწარი ფილტრი გაავლეთ, 24 სთ გააშრეთ. თუ მტვერსასრუტი უქმად დგას, დატენეთ, რომ აკუმულატორი სრულად არ დაცარიელდეს.", "Every 4–6 months": "4–6 თვეში ერთხელ", "HEPA filter": "HEPA ფილტრი", "Pull it out of the exhaust cap, rinse under clean water while turning it, tap out the water, dry 24 h.": "გამომშვები თავსახურიდან ამოიღეთ, ტრიალით გაავლეთ სუფთა წყალში, წყალი დაბერტყეთ, 24 სთ გააშრეთ.", "Every 6 months": "6 თვეში ერთხელ", "Cyclone assembly": "ციკლონური ბლოკი", "Lift it out of the cup, rinse until clear, dry 24 h before reassembly.": "კონტეინერიდან ამოიღეთ, გაავლეთ გასუფთავებამდე, აწყობამდე 24 სთ გააშრეთ.", "07 — FIX": "07 — პრობლემები", "When something is off.": "როცა რაღაც ისე არ არის.", "Most problems are a blockage, a full cup or a hot battery. Work down this list before calling support.": "პრობლემების უმეტესობა გაჭედვა, სავსე კონტეინერი ან გახურებული აკუმულატორია. მხარდაჭერასთან დარეკვამდე ეს სია გაიარეთ.", "What you see": "რას ხედავთ", "Likely cause": "სავარაუდო მიზეზი", "What to do": "რა გააკეთოთ", "Nothing happens on the trigger": "ტრიგერზე არაფერი ხდება", "Battery empty, or the charger is still connected": "აკუმულატორი ცარიელია ან დამტენი ჯერ კიდევ მიერთებულია", "Charge fully. Unplug before use; it will not run while charging.": "სრულად დატენეთ. გამოყენებამდე გამოაერთეთ; დატენვისას არ იმუშავებს.", "Starts, then stops within seconds": "ირთვება და წამებში ჩერდება", "Clogged filter, nozzle or rod; overheat protection": "გაჭედილი ფილტრი, საქშენი ან მილი; გადახურებისგან დაცვა", "Empty the cup, check the rod and the head for a blockage, let it cool, try again.": "დაცალეთ კონტეინერი, შეამოწმეთ მილი და თავაკი გაჭედვაზე, გააგრილეთ და სცადეთ ისევ.", "Weak suction": "სუსტი შეწოვა", "Cup at MAX, dirty filters, blocked attachment": "კონტეინერი MAX-ზეა, ჭუჭყიანი ფილტრები, გაჭედილი საქშენი", "Empty the cup. Rinse the pre-filter and HEPA, dry 24 h. Clear the attachment.": "დაცალეთ კონტეინერი. გაავლეთ წინასწარი ფილტრი და HEPA, 24 სთ გააშრეთ. გაწმინდეთ საქშენი.", "Roller does not spin": "ლილვაკი არ ბრუნავს", "Hair wrapped around it, or an object jammed": "თმა აქვს დახვეული ან საგანია გაჭედილი", "Power off, unlock the roller, cut the hair, remove the object.": "გამორთეთ, გახსენით ლილვაკი, მოაჭერით თმა, ამოიღეთ საგანი.", "Strange motor noise": "ძრავის უცნაური ხმა", "Blockage in the main intake or rod": "გაჭედვა მთავარ შემწოვ ხვრელში ან მილში", "Detach the rod and look through it. Remove whatever is stuck.": "მოხსენით მილი და გაიხედეთ შიგნით. ამოიღეთ, რაც გაჭედილია.", "Indicator solid red after power-on": "ჩართვისას ინდიკატორი მუდმივად წითელია", "Battery pack fault": "აკუმულატორის გაუმართაობა", "Contact Dreame after-sales.": "დაუკავშირდით Dreame-ის სერვისს.", "Indicator blinks red while charging": "დატენვისას ინდიკატორი წითლად ციმციმებს", "Wrong or incompatible charger": "არასწორი ან შეუთავსებელი დამტენი", "Use the original Dreame charger only.": "მხოლოდ ორიგინალი Dreame-ის დამტენი გამოიყენეთ.", "Charging is very slow": "დატენვა ძალიან ნელია", "Battery too hot or too cold": "აკუმულატორი ზედმეტად ცხელი ან ცივია", "Charge between 0 and 40 °C. After Turbo, wait 30 minutes.": "დატენეთ 0-დან 40 °C-მდე. ტურბოს შემდეგ 30 წუთი დაელოდეთ.", "Front LEDs stay dark": "წინა LED-ები არ ანათებს", "LED fault": "LED-ის გაუმართაობა", "Mop leaves no water": "მოპი წყალს არ ტოვებს", "Outflow set to Off, tank empty, pads dry": "მიწოდება გამორთულია, ავზი ცარიელია, ბალიშები მშრალია", "Set outflow to Low or High, refill with clean water, pre-dampen the pads.": "მიწოდება დაბალზე ან მაღალზე დააყენეთ, სუფთა წყალი ჩაასხით, ბალიშები წინასწარ დაასველეთ.", "Sources and notes": "წყაროები და შენიშვნები", "Dreame product pages for the R10 Pro Aqua (figures: 150 AW, 600 ml cup, 200 ml tank, 116 rpm pads, 2500 mAh, about 90 min Eco, about 4 h charge):": "Dreame-ის პროდუქტის გვერდები R10 Pro Aqua-სთვის (მონაცემები: 150 AW, 600 მლ კონტეინერი, 200 მლ ავზი, 116 ბრ/წთ ბალიშები, 2500 mAh, დაახლ. 90 წთ ეკო, დაახლ. 4 სთ დატენვა):", "am.dreametech.com": "am.dreametech.com", "ge.dreametech.com": "ge.dreametech.com", "global.dreametech.com": "global.dreametech.com", "Dreame user manuals for the R10 Pro (body, brush, filters, FAQ) and the R10S Slim Aqua (spin mop head procedure and warnings), via": "Dreame-ის ინსტრუქციები R10 Pro-სთვის (კორპუსი, ჯაგრისი, ფილტრები, FAQ) და R10S Slim Aqua-სთვის (მბრუნავი მოპის თავაკის პროცედურა და გაფრთხილებები), წყარო:", ". The R10 Pro Aqua printed manual (VZV15A) is not published as text online; where it differs, follow the paper manual in your box.": ". R10 Pro Aqua-ს ბეჭდური ინსტრუქცია (VZV15A) ინტერნეტში ტექსტურად გამოქვეყნებული არ არის; განსხვავების შემთხვევაში ყუთში ჩადებულ ინსტრუქციას მიჰყევით.", "Illustrations are schematic, not to scale. Runtime figures are Dreame's maximums under ideal conditions.": "ილუსტრაციები სქემატურია და მასშტაბი დაცული არ არის. მუშაობის დროის მონაცემები Dreame-ის მაქსიმუმებია იდეალურ პირობებში.", "click": "კლიკ", "press release": "დააჭირეთ გამათავისუფლებელს", "100% · about 4 h from empty": "100% · ცარიელიდან დაახლ. 4 სთ", "dampen · wring out · press on": "დაასველეთ · გაწურეთ · დააჭირეთ", "clean water only · no chemicals": "მხოლოდ სუფთა წყალი · ქიმიკატების გარეშე", "pads spin at 116 rpm": "ბალიშები 116 ბრ/წთ-ზე ბრუნავს", "brush switch ON": "ჯაგრისის გადამრთველი ON", "brush switch OFF": "ჯაგრისის გადამრთველი OFF", "powered roller lifts hair": "მოტორიანი ლილვაკი თმას იღებს", "bristles slide forward / back": "ჯაგარი წინ / უკან სრიალებს", "outflow OFF": "მიწოდება გამორთ.", "charger unplugged · finger off the trigger": "დამტენი გამოერთებული · თითი ტრიგერს არ ეხება", "cup release → lift off": "კონტეინერის გამათავისუფლებელი → მოხსენით", "clean water · turn it 360°": "სუფთა წყალი · შემოატრიალეთ 360°", "24 h air dry": "24 სთ ჰაერზე შრობა", "HEPA · every 4–6 months": "HEPA · 4–6 თვეში ერთხელ", "Pre-filter · every 3 months": "წინასწარი ფილტრი · 3 თვეში ერთხელ", "Cyclone · every 6 months": "ციკლონი · 6 თვეში ერთხელ", "counterclockwise until it stops": "საათის ისრის საწინააღმდეგოდ გაჩერებამდე", "power off · flip it over": "გამორთეთ · გადააბრუნეთ", "pads pull straight off": "ბალიშები პირდაპირ მოიხსნება", "pads · 24 h dry": "ბალიშები · 24 სთ შრობა", "tank empty · outflow OFF · ready to store": "ავზი ცარიელი · მიწოდება გამორთ. · შესანახად მზადაა", "HEPA filter behind the exhaust cap": "HEPA ფილტრი გამომშვები თავსახურის უკან", "Dust cup · 600 ml": "მტვრის კონტეინერი · 600 მლ", "Display + mode button": "ეკრანი + რეჟიმის ღილაკი", "Trigger · hold to run": "ტრიგერი · დაჭერით მუშაობს", "Battery · slides off": "აკუმულატორი · მოიხსნება", "Multi-surface brush · LEDs · carpet switch": "მრავალზედაპირიანი ჯაგრისი · LED · ხალიჩის გადამრთველი", "Pull it out from the front. Wash every 4–6 months.": "წინა მხრიდან ამოიღეთ. გარეცხეთ 4–6 თვეში ერთხელ.", "Opens from the bottom. Empty after every session.": "ქვემოდან იღება. ყოველი წმენდის შემდეგ დაცალეთ.", "Battery % on screen. The button under it cycles Eco → Standard → Turbo.": "ეკრანზე აკუმულატორის %. ქვედა ღილაკი ცვლის: ეკო → სტანდარტული → ტურბო.", "Release to stop. Tap the lock behind the grip to keep it running.": "აუშვით და გაჩერდება. სახელურის უკან ფიქსატორს დააჭირეთ, რომ იმუშაოს.", "Removable 2500 mAh pack. Charger plugs into its back.": "მოხსნადი 2500 mAh აკუმულატორი. დამტენი უკანა მხარეს ერთვება.", "Grey release button at the top. Pull it off for handheld use.": "ნაცრისფერი გამათავისუფლებელი ზემოთ. ხელის რეჟიმისთვის მოხსენით.", "Switch ON for carpet and rugs, OFF for hard floors.": "ON ხალიჩებისთვის, OFF მყარი იატაკისთვის.", "Hang it with the rod and brush attached, never the body alone.": "ჩამოკიდეთ მილითა და ჯაგრისით, არასდროს მარტო კორპუსი.", "Charge to 100%, then unplug. Store cool, dry, out of the sun.": "100%-მდე დატენეთ და გამოაერთეთ. შეინახეთ გრილ, მშრალ, მზისგან დაცულ ადგილას.", "Stored for months? Top the battery up every 3 months.": "თვეობით ინახება? 3 თვეში ერთხელ შეავსეთ.", "Charge between 0 and 40 °C. After long Turbo use, cool it 30 minutes first.": "დატენეთ 0-დან 40 °C-მდე. ხანგრძლივი ტურბოს შემდეგ ჯერ 30 წუთი გააგრილეთ.", "Dreame cordless vacuum with spin mop head": "Dreame-ის უსადენო მტვერსასრუტი მბრუნავი მოპის თავაკით", "Plug the charger into the port on the battery. A full charge takes about 4 hours. The display shows the percentage; the light turns off 5 minutes after 100%.": "დამტენი აკუმულატორის პორტში ჩართეთ. სრულ დატენვას დაახლოებით 4 საათი სჭირდება. ეკრანი პროცენტს აჩვენებს; 100%-დან 5 წუთში განათება ქრება.", "Wall mount: stick the template about 1 m above the floor at the height marked on it, drill two 8 mm holes, add the plugs and screws. Hang the vacuum with the rod and brush attached, never the body alone.": "კედლის სამაგრი: შაბლონი იატაკიდან დაახლოებით 1 მ სიმაღლეზე, მასზე მითითებულ ნიშნულზე მიაკარით, გაბურღეთ ორი 8 მმ ხვრელი, ჩასვით დუბელები და ჭანჭიკები. მტვერსასრუტი მილითა და ჯაგრისით ჩამოკიდეთ, არასდროს — მარტო კორპუსი.", "TUBE · CLICKS AT BOTH ENDS": "მილი · ორივე ბოლო კლიკით მაგრდება", "Connects the body to either floor head. The release buttons sit on the body and on the head. Also carries the small tools up to ceilings and curtain rails.": "კორპუსს იატაკის ნებისმიერ თავაკთან აერთებს. გამათავისუფლებელი ღილაკები კორპუსსა და თავაკზეა. პატარა საქშენებით ჭერსა და ფარდის კარნიზებსაც სწვდება.", "Bristles for dusting shelves, keyboards and blinds. Without the brush it is a wide nozzle for corners and car interiors.": "ჯაგარი თაროების, კლავიატურისა და ჟალუზების მტვრისთვის. ჯაგრის გარეშე ფართო საქშენია კუთხეებისა და მანქანის სალონისთვის.", "Switch ON drives the roller's stiff rubber edge into the pile to loosen grit and hair. The V-shaped roller edges keep hair and fur from tangling.": "გადამრთველი ON ლილვაკის მაგარ რეზინის კიდეს ხალიჩის ბეწვში ჩააყოლებს და ქვიშასა და თმას აშორებს. ლილვაკის V-ფორმის კიდეები თმასა და ბეწვს დახვევისგან იცავს.", "Dreame calls it 2-in-1: suction and two pads at 116 rpm work in the same pass. Water feeds automatically from the 200 ml tank through the outflow switch.": "Dreame მას 2-in-1-ს უწოდებს: შეწოვა და ორი ბალიში 116 ბრ/წთ სიჩქარით ერთსა და იმავე გავლაში მუშაობს. წყალი 200 მლ ავზიდან ავტომატურად მიეწოდება მიწოდების გადამრთველის მეშვეობით.", "ON while mopping, OFF before storage": "ON წმენდისას, OFF შენახვამდე", "Sealed hard floors only. Wring the pads well on wood-based floors and never leave a puddle standing.": "მხოლოდ დალუქული მყარი იატაკისთვის. ხის იატაკზე ბალიშები კარგად გაწურეთ და გუბე არასდროს დატოვოთ.", "With the bristles it dusts keyboards, blinds and bookshelves without scratching. Without them it is a wide nozzle for corners, skirting and between cushions.": "ჯაგრით კლავიატურას, ჟალუზებსა და წიგნის თაროებს ნაკაწრების გარეშე წმენდს. ჯაგრის გარეშე ფართო საქშენია კუთხეების, პლინტუსისა და ბალიშებს შორის სივრცისთვის.", "On for dusting, off for crevices": "ჯაგრით მტვრისთვის, ჯაგრის გარეშე ვიწრო ადგილებისთვის", "Without the brush": "ჯაგრის გარეშე", "Release to stop. Tap the trigger lock to keep it running.": "აუშვით და გაჩერდება. ტრიგერის ფიქსატორს დააჭირეთ, რომ იმუშაოს.", "Lift the plug on top, pour, close. No detergent, no chemicals: they damage the tank.": "ზედა საცობი ახადეთ, ჩაასხით, დახურეთ. არც სარეცხი საშუალება, არც ქიმიკატები: ისინი ავზს აზიანებს.", "The pads spin and water feeds through automatically. The outflow switch on the head turns the water feed on and off.": "ბალიშები ბრუნავს და წყალი ავტომატურად მიეწოდება. თავაკზე წყლის მიწოდების გადამრთველი წყალს რთავს და თიშავს.", "On": "ჩართ.", "outflow ON": "მიწოდება ჩართ.", "Everything washable is rinsed with plain water and air-dried for 24 hours before it goes back in. Nothing gets detergent, and the body, the brush motors and the battery never get wet.": "ყველაფერი, რაც ირეცხება, უბრალო წყლით ივლება და დაბრუნებამდე 24 საათი ჰაერზე შრება. არაფერს ეხება სარეცხი საშუალება, კორპუსი, ჯაგრისის ძრავები და აკუმულატორი კი არასდროს სველდება.", "Damp pads smell and streak. Overnight at least; 24 hours to be safe.": "ნესტიანი ბალიშები ყარს და ზოლებს ტოვებს. მინიმუმ ღამით; საიმედოდ — 24 საათი.", "Before storing it. Water left standing in the tank clouds it and clogs the feed.": "შენახვამდე. ავზში დარჩენილი წყალი მას ამღვრევს და მიწოდებას აჭედავს.", "Wipe the cup with a damp, well-wrung cloth. Check the roller and cut off any hair.": "კონტეინერი ნესტიანი, კარგად გაწურული ნაჭრით გაწმინდეთ. ლილვაკი შეამოწმეთ და თმა მოაჭერით.", "Switch the outflow on, refill with clean water, pre-dampen the pads.": "მიწოდება ჩართეთ, სუფთა წყალი ჩაასხით, ბალიშები წინასწარ დაასველეთ.", "Dreame product pages and images for the R10 Pro Aqua (figures: 150 AW, 600 ml cup, 200 ml tank, 116 rpm pads, 2500 mAh, about 90 min Eco, about 4 h charge; roller design; HEPA filter behind the front exhaust cap):": "Dreame-ის პროდუქტის გვერდები და სურათები R10 Pro Aqua-სთვის (მონაცემები: 150 AW, 600 მლ კონტეინერი, 200 მლ ავზი, 116 ბრ/წთ ბალიშები, 2500 mAh, დაახლ. 90 წთ ეკო, დაახლ. 4 სთ დატენვა; ლილვაკის კონსტრუქცია; HEPA ფილტრი წინა გამომშვები თავსახურის უკან):", "press the trigger first": "ჯერ ტრიგერს დააჭირეთ", "bristles on for dusting, off for crevices": "ჯაგარი: მტვრისთვის — ჯაგრით, ვიწრო ადგილებისთვის — უჯაგროდ", "EN": "EN", "ქართული": "ქართული", "R10 Pro Aqua Guide": "R10 Pro Aqua Guide"};
+const norm = s => String(s).replace(/[\u2019\u2018]/g,"'").replace(/\s+/g,' ').trim();
+const KA = {}; for (const k in KA_RAW) KA[norm(k)] = KA_RAW[k];
+let LANG = 'ka'; try { const v = localStorage.getItem('r10-lang'); if (v==='en' || v==='ka') LANG = v; } catch(e){}
+const MISSING = new Set(); window.__r10missing = MISSING;
+function t(s){ if (LANG==='en' || s==null) return s; const str=String(s); if (!/[A-Za-z]/.test(str)) return str; const v = KA[norm(str)]; if (v===undefined){ MISSING.add(str); return str; } return v; }
+const textNodes = [];
+(function collect(){
+  const skip = 'script,style,svg,title,#parts,#heads-panel,#clean-panel,#surf-chips,#clean-tabs,#u-status,#u-remaining,#u-tip,#lang';
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode(n){ if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT; const p=n.parentElement; if (!p || p.closest(skip)) return NodeFilter.FILTER_REJECT; return NodeFilter.FILTER_ACCEPT; } });
+  let n; while ((n = w.nextNode())) textNodes.push({node:n, orig:n.nodeValue});
+})();
+function applyStatic(){ textNodes.forEach(({node,orig})=>{ const m = orig.match(/^(\s*)([\s\S]*?)(\s*)$/); node.nodeValue = m[1] + t(m[2]) + m[3]; }); }
+const onLang = [];
+function setLang(l){ LANG = l==='ka'?'ka':'en'; try { localStorage.setItem('r10-lang', LANG); } catch(e){} document.documentElement.lang = LANG; applyStatic(); onLang.forEach(f=>{ try{ f(); }catch(e){ console.error(e); } }); document.querySelectorAll('#lang button').forEach(b=>{ const on=b.dataset.l===LANG; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on); }); }
+
+
+/* ---------- defs ---------- */
+const DEFS = (id) => `<defs>
+ <linearGradient id="${id}-housing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34353c"/><stop offset=".55" stop-color="#1d1e23"/><stop offset="1" stop-color="#121318"/></linearGradient>
+ <linearGradient id="${id}-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(190,210,230,.38)"/><stop offset=".5" stop-color="rgba(190,210,230,.12)"/><stop offset="1" stop-color="rgba(190,210,230,.32)"/></linearGradient>
+ <pattern id="${id}-mesh" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#a3aab2"/><circle cx="2" cy="2" r="1" fill="#5f666e"/></pattern>
+ <linearGradient id="${id}-beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(120,185,255,0)"/><stop offset="1" stop-color="rgba(120,185,255,.6)"/></linearGradient>
+ <linearGradient id="${id}-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--wood-a)"/><stop offset="1" style="stop-color:var(--wood-b)"/></linearGradient>
+ <linearGradient id="${id}-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--stage)"/><stop offset="1" style="stop-color:var(--stage-2)"/></linearGradient>
+ <pattern id="${id}-carpet" width="10" height="8" patternUnits="userSpaceOnUse"><path d="M1,7 l2,-5 M6,7 l2,-5" stroke="rgba(0,0,0,.14)" stroke-width="1.2" stroke-linecap="round"/></pattern>
+ <pattern id="${id}-fabric" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0,6 h12 M6,0 v12" stroke="rgba(0,0,0,.08)" stroke-width="1"/></pattern>
+ <clipPath id="${id}-tank"><path d="M-118,22 Q-118,-2 -92,-4 L28,-4 Q50,-2 50,22 Z"/></clipPath>
+ <linearGradient id="${id}-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(120,200,255,.78)"/><stop offset="1" stop-color="rgba(50,140,220,.78)"/></linearGradient>
+ <linearGradient id="${id}-stream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(120,200,255,.2)"/><stop offset=".3" stop-color="rgba(120,200,255,.8)"/><stop offset="1" stop-color="rgba(120,200,255,.85)"/></linearGradient>
+</defs>`;
+
+/* ---------- parts (B frame: origin at intake bottom, up = -y, front = -x) ---------- */
+function gBody(id){ return `
+<g class="body">
+  <rect x="50" y="-172" width="26" height="106" rx="12" fill="#232329"/>
+  <rect class="trig-lock" x="75" y="-150" width="8" height="14" rx="3" fill="#4b4b54"/>
+  <rect class="trigger" x="39" y="-152" width="13" height="34" rx="6" fill="#3d3d45"/>
+  <rect x="-62" y="-232" width="134" height="68" rx="34" fill="url(#${id}-housing)"/>
+  <g class="hepa" opacity="0"><rect x="-58" y="-224" width="40" height="52" rx="5" fill="#f1f3f5" stroke="#2a2b31" stroke-width="2"/><g stroke="#aeb4bb" stroke-width="1.4">${[-52,-47,-42,-37,-32,-27,-22].map(x=>`<line x1="${x}" y1="-222" x2="${x}" y2="-174"/>`).join('')}</g></g>
+  <g class="cap"><ellipse cx="-56" cy="-198" rx="10" ry="30" fill="#3a3b43" stroke-width="2.5" style="stroke:var(--gold)"/><ellipse cx="-56" cy="-198" rx="5" ry="20" fill="#24252b"/></g>
+  <g fill="#0b0c0f"><rect x="-30" y="-224" width="26" height="3" rx="1.5"/><rect x="-30" y="-217" width="26" height="3" rx="1.5"/><rect x="-30" y="-210" width="26" height="3" rx="1.5"/></g>
+  <g class="pod">
+    <rect x="48" y="-212" width="32" height="46" rx="15" fill="#0f1013" stroke="#2c2d33"/>
+    <g class="d-lock" opacity=".3"><rect x="60" y="-204" width="8" height="6" rx="1" fill="#cfd6e0"/><path d="M61.5,-204 v-2.5 a2.5,2.5 0 0 1 5,0 v2.5" fill="none" stroke="#cfd6e0" stroke-width="1.3"/></g>
+    <text class="d-pct" x="64" y="-186" text-anchor="middle" font-size="9.5" font-weight="500" style="font-family:'IBM Plex Mono',monospace" fill="#e8f3ff">100</text>
+    <path class="d-arc" d="M56,-178 a8,6 0 0 0 16,0" fill="none" stroke="#39d98a" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <circle class="mode-btn" cx="64" cy="-160" r="4" fill="#3d3d45" stroke="#5b5b64"/>
+  <rect x="-33" y="-168" width="66" height="6" rx="2" ${sv('--gold')}/>
+  <g class="cupG">
+    <rect class="cup" x="-30" y="-162" width="60" height="110" rx="6" fill="url(#${id}-glass)" stroke="rgba(255,255,255,.4)"/>
+    <rect class="prefilter" x="-22" y="-156" width="44" height="32" rx="4" fill="url(#${id}-mesh)" stroke="#7d848c" stroke-width=".8"/>
+    <path class="cyclone" d="M-22,-124 h44 l-13,48 h-18 z" fill="#3b3b44"/>
+    <g class="debris" fill="#b08a5c"><circle cx="-18" cy="-60" r="2.2"/><circle cx="-8" cy="-57" r="1.8"/><circle cx="4" cy="-61" r="2.4"/><circle cx="14" cy="-58" r="1.6"/><circle cx="-2" cy="-66" r="1.4"/><circle cx="18" cy="-64" r="1.2"/><circle cx="-14" cy="-69" r="1"/><circle cx="8" cy="-70" r="1.3"/></g>
+    <rect x="-24" y="-156" width="5" height="98" rx="2.5" fill="rgba(255,255,255,.22)"/>
+    <g class="lid"><rect x="-31" y="-52" width="62" height="7" rx="2" fill="#2d2d34"/></g>
+    <rect class="lid-btn" x="-38" y="-57" width="7" height="11" rx="2.5" fill="#4b4b54"/>
+  </g>
+  <rect x="-12" y="-45" width="24" height="45" rx="3" fill="#2a2a31"/>
+  <rect class="rod-release" x="12" y="-32" width="8" height="13" rx="3" fill="#4b4b54"/>
+</g>`;}
+function gBattery(){ return `
+<g class="battery">
+  <rect x="36" y="-66" width="62" height="32" rx="6" fill="#2b2b31" stroke="#3a3a42"/>
+  <g stroke="#17171b" stroke-width="2">${[46,55,64,73,82].map(x=>`<line x1="${x}" y1="-58" x2="${x}" y2="-42"/>`).join('')}</g>
+  <rect class="batt-release" x="98" y="-62" width="6" height="14" rx="2" fill="#4b4b54"/>
+  <rect class="port" x="98" y="-46" width="5" height="8" rx="1" fill="#0b0c0f"/>
+</g>`;}
+function gCharger(){ return `
+<g class="charger">
+  <rect x="103" y="-48" width="16" height="12" rx="3" fill="#2b2b31" stroke="#3a3a42"/>
+  <path d="M119,-42 C150,-42 158,10 196,10 L240,10" fill="none" stroke="#2b2b31" stroke-width="3" stroke-linecap="round"/>
+</g>`;}
+function gRod(){ return `
+<g class="rod">
+  <rect x="-8" y="${-ROD}" width="16" height="${ROD}" fill="#2f3038"/>
+  <rect x="-5" y="${-ROD+14}" width="2" height="${ROD-28}" fill="rgba(255,255,255,.07)"/>
+  <rect x="-11" y="${-ROD}" width="22" height="14" rx="3" fill="#36363e"/>
+  <rect x="-11" y="-14" width="22" height="14" rx="3" fill="#36363e"/>
+</g>`;}
+/* head frame: origin at neck top (rod bottom), +y down, front = -x */
+function gBrush(id){ return `
+<g class="head brush">
+  <rect x="-10" y="0" width="20" height="18" rx="3" fill="#34343c"/>
+  <rect class="head-release" x="10" y="4" width="8" height="10" rx="3" fill="#4b4b54"/>
+  <circle cx="0" cy="22" r="9" fill="#2a2a31" stroke="#3f3f48"/>
+  <path d="M-124,56 L-124,34 Q-124,18 -106,18 L48,18 Q66,18 66,34 L66,56 Z" fill="#202026"/>
+  <rect x="-108" y="22" width="130" height="2" opacity=".55" ${sv('--gold')}/>
+  <g class="brush-switch"><rect x="18" y="12" width="22" height="9" rx="4.5" fill="#15151a" stroke="#4b4b54"/><circle class="sw-knob" cx="23" cy="16.5" r="3.2" fill="#c9ccd1"/></g>
+  <rect x="-120" y="26" width="72" height="28" rx="4" fill="rgba(170,195,220,.2)" stroke="rgba(255,255,255,.25)"/>
+  <g class="roller" transform="translate(-84,40)">
+    <circle r="12" fill="#3a3a43"/>
+    <g stroke-width="2.4" stroke-linecap="round" style="stroke:var(--gold)"><line x1="-11" y1="0" x2="11" y2="0"/><line x1="-5.5" y1="-9.5" x2="5.5" y2="9.5"/><line x1="-5.5" y1="9.5" x2="5.5" y2="-9.5"/></g>
+    <circle r="3" fill="#15151a"/>
+  </g>
+  <path class="beam" d="M-124,44 L-186,59 L-124,59 Z" fill="url(#${id}-beam)" opacity="0"/>
+  <circle class="led" cx="-121" cy="49" r="3" fill="#8ec5ff"/>
+  <circle cx="44" cy="52" r="7" fill="#101014" stroke="#3c3c45" stroke-width="2"/><circle cx="44" cy="52" r="2" fill="#55555e"/>
+  <rect x="-120" y="55" width="150" height="3" fill="#0a0a0d"/>
+</g>`;}
+function gMop(id){ return `
+<g class="head mop">
+  <path class="tank" d="M-118,22 Q-118,-2 -92,-4 L28,-4 Q50,-2 50,22 Z" fill="rgba(140,185,225,.22)" stroke="rgba(255,255,255,.3)"/>
+  <rect class="water" x="-118" y="22" width="168" height="0" fill="url(#${id}-water)" clip-path="url(#${id}-tank)"/>
+  <rect x="-10" y="0" width="20" height="18" rx="3" fill="#34343c"/>
+  <rect class="head-release" x="10" y="4" width="8" height="10" rx="3" fill="#4b4b54"/>
+  <circle class="plug" cx="-100" cy="-1" r="5" stroke="#1a1a1f" ${sv('--gold')}/>
+  <g class="flow"><rect x="14" y="3" width="26" height="9" rx="4.5" fill="#15151a" stroke="#4b4b54"/><circle class="flow-knob" cx="33" cy="7.5" r="3.2" fill="#c9ccd1"/></g>
+  <path d="M-130,60 L-130,36 Q-130,22 -116,22 L56,22 Q70,22 70,36 L70,60 Z" fill="#202026"/>
+  <rect x="-116" y="26" width="170" height="2" opacity=".5" ${sv('--gold')}/>
+  <text x="-34" y="47" font-size="7" letter-spacing="1.5" fill="#60616a" style="font-family:Sora,'Noto Sans Georgian',sans-serif">AQUA</text>
+  <ellipse class="pad pad-a" cx="-86" cy="63" rx="34" ry="5" fill="#d8dbde" stroke="#9aa0a7" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <ellipse class="pad pad-b" cx="12" cy="63" rx="34" ry="5" fill="#d8dbde" stroke="#9aa0a7" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <g class="drops" opacity="0" style="fill:var(--water)"><circle cx="-60" cy="62" r="2"/><circle cx="34" cy="60" r="2"/><circle cx="-110" cy="61" r="1.6"/></g>
+  <rect class="wet" x="-150" y="66" width="240" height="5" rx="2.5" fill="rgba(74,168,234,.35)" opacity="0"/>
+</g>`;}
+/* tool frame: origin at intake bottom, +y down */
+function gMini(){ return `
+<g class="tool mini">
+  <rect x="-8" y="0" width="16" height="24" rx="3" fill="#34343c"/>
+  <rect x="-40" y="22" width="76" height="44" rx="12" fill="#202026"/>
+  <rect x="-38" y="26" width="72" height="2" opacity=".5" ${sv('--gold')}/>
+  <rect x="-36" y="30" width="46" height="30" rx="5" fill="rgba(170,195,220,.2)" stroke="rgba(255,255,255,.25)"/>
+  <g class="roller" transform="translate(-13,45)"><circle r="11" fill="#5d6168"/><g stroke="#9ca1a8" stroke-width="2" stroke-linecap="round"><line x1="-10" y1="0" x2="10" y2="0"/><line x1="-5" y1="-8.7" x2="5" y2="8.7"/><line x1="-5" y1="8.7" x2="5" y2="-8.7"/></g><circle r="2.5" fill="#2a2a31"/></g>
+  <circle class="coin-lock" cx="24" cy="44" r="4.5" fill="#15151a" stroke="#4b4b54"/><line x1="21.5" y1="44" x2="26.5" y2="44" stroke="#8a8a94" stroke-width="1.2"/>
+  <rect x="-36" y="62" width="60" height="3" fill="#0a0a0d"/>
+</g>`;}
+function gCombo(){ return `
+<g class="tool combo">
+  <rect x="-8" y="0" width="16" height="26" rx="3" fill="#34343c"/>
+  <path d="M-10,26 L10,26 L18,74 L-18,74 Z" fill="#2a2a31"/>
+  <rect x="-24" y="74" width="48" height="10" rx="2" fill="#333339"/>
+  <g class="bristles"><rect x="-24" y="84" width="48" height="4" fill="#4a4a52"/><g stroke="#9ca1a8" stroke-width="2" stroke-linecap="round">${[-20,-15,-10,-5,0,5,10,15,20].map(x=>`<line x1="${x}" y1="88" x2="${x}" y2="98"/>`).join('')}</g></g>
+</g>`;}
+function gFlex(){ return `
+<g class="tool flex">
+  <rect x="-8" y="0" width="16" height="26" rx="3" fill="#34343c"/>
+  <rect x="-7" y="26" width="14" height="90" rx="3" fill="#2a2a31"/>
+  <rect x="-4" y="30" width="2" height="82" fill="rgba(255,255,255,.06)"/>
+  <circle cx="0" cy="120" r="8" fill="#3a3a43" stroke="#4b4b54"/>
+  <g class="flex-tip" transform="translate(0,120) rotate(-22)">
+    <rect x="-5" y="0" width="10" height="32" rx="3" fill="#2a2a31"/>
+    <rect x="-12" y="32" width="24" height="5" rx="1.5" fill="#4a4a52"/>
+    <g stroke="#9ca1a8" stroke-width="2" stroke-linecap="round">${[-9,-4.5,0,4.5,9].map(x=>`<line x1="${x}" y1="37" x2="${x}" y2="46"/>`).join('')}</g>
+  </g>
+</g>`;}
+function gPads(){ return `<g><circle cx="-40" cy="0" r="32" fill="#d8dbde" stroke="#9aa0a7" stroke-width="2"/><circle cx="-40" cy="0" r="22" fill="none" stroke="#c3c7cb" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="-40" cy="0" r="5" fill="#8f959c"/><circle cx="40" cy="0" r="32" fill="#d8dbde" stroke="#9aa0a7" stroke-width="2"/><circle cx="40" cy="0" r="22" fill="none" stroke="#c3c7cb" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="40" cy="0" r="5" fill="#8f959c"/></g>`; }
+function gChargerIcon(){ return `<g><rect x="-62" y="-20" width="56" height="40" rx="7" fill="#2b2b31" stroke="#3a3a42"/><rect x="-54" y="-10" width="7" height="20" rx="2" fill="#8a8a94"/><rect x="-21" y="-10" width="7" height="20" rx="2" fill="#8a8a94"/><path d="M-6,0 C20,0 20,0 40,0" fill="none" stroke="#2b2b31" stroke-width="3"/><rect x="40" y="-8" width="22" height="16" rx="4" fill="#2b2b31" stroke="#3a3a42"/></g>`; }
+function gMount(){ return `<g><rect x="-34" y="-50" width="68" height="100" rx="8" fill="#2b2b31" stroke="#3a3a42"/><rect x="-14" y="-38" width="28" height="56" rx="6" fill="#15151a"/><circle cx="-22" cy="-40" r="3" fill="#8a8a94"/><circle cx="22" cy="-40" r="3" fill="#8a8a94"/><circle cx="-22" cy="40" r="3" fill="#8a8a94"/><circle cx="22" cy="40" r="3" fill="#8a8a94"/></g>`; }
+
+/* ---------- floors / surfaces (scene coords) ---------- */
+function gFloor(id, kind){
+  const wall = `<rect x="0" y="0" width="${W}" height="${FLOOR}" fill="url(#${id}-wall)"/>`;
+  const board = `<rect x="0" y="${FLOOR-10}" width="${W}" height="10" ${sv('--board')}/>`;
+  if (kind==='wood') return wall+board+`<g class="floor"><rect x="0" y="${FLOOR}" width="${W}" height="${H-FLOOR}" fill="url(#${id}-wood)"/>
+    <g stroke="rgba(60,35,15,.35)" stroke-width="1.2"><line x1="0" y1="${FLOOR+30}" x2="${W}" y2="${FLOOR+30}"/>
+    ${[140,420,700].map(x=>`<line x1="${x}" y1="${FLOOR}" x2="${x}" y2="${FLOOR+30}"/>`).join('')}${[60,300,560,820].map(x=>`<line x1="${x}" y1="${FLOOR+30}" x2="${x}" y2="${H}"/>`).join('')}</g>
+    <g stroke="rgba(255,255,255,.16)" stroke-width="1" fill="none"><path d="M10,${FLOOR+12} Q200,${FLOOR+9} 400,${FLOOR+13}"/><path d="M460,${FLOOR+48} Q650,${FLOOR+44} 880,${FLOOR+50}"/><path d="M620,${FLOOR+16} Q760,${FLOOR+13} 890,${FLOOR+17}"/></g></g>`;
+  if (kind==='carpet') return wall+board+`<g class="floor"><rect x="0" y="${FLOOR}" width="${W}" height="${H-FLOOR}" ${sv('--carpet')}/><rect x="0" y="${FLOOR}" width="${W}" height="${H-FLOOR}" fill="url(#${id}-carpet)"/>
+    <line x1="0" y1="${FLOOR+1}" x2="${W}" y2="${FLOOR+1}" stroke-width="5" stroke-dasharray="2 3" stroke-linecap="round" style="stroke:var(--carpet)"/></g>`;
+  if (kind==='tile') return wall+board+`<g class="floor"><rect x="0" y="${FLOOR}" width="${W}" height="${H-FLOOR}" ${sv('--tile')}/>
+    <g stroke="rgba(90,100,110,.35)" stroke-width="2"><line x1="0" y1="${FLOOR+32}" x2="${W}" y2="${FLOOR+32}"/>${[75,225,375,525,675,825].map(x=>`<line x1="${x}" y1="${FLOOR}" x2="${x}" y2="${FLOOR+32}"/>`).join('')}${[0,150,300,450,600,750,900].map(x=>`<line x1="${x}" y1="${FLOOR+32}" x2="${x}" y2="${H}"/>`).join('')}</g>
+    <rect x="0" y="${FLOOR}" width="${W}" height="14" fill="rgba(255,255,255,.18)"/></g>`;
+  if (kind==='sofa') return wall+`<g class="floor">
+    <rect x="690" y="330" width="190" height="230" rx="18" fill="url(#${id}-fabric)" style="fill:var(--fabric-2)"/><rect x="690" y="330" width="190" height="230" rx="18" fill="url(#${id}-fabric)"/>
+    <rect x="30" y="${FLOOR}" width="850" height="${H-FLOOR}" rx="14" ${sv('--fabric')}/><rect x="30" y="${FLOOR}" width="850" height="${H-FLOOR}" rx="14" fill="url(#${id}-fabric)"/>
+    <line x1="450" y1="${FLOOR+6}" x2="450" y2="${H}" stroke="rgba(0,0,0,.15)" stroke-width="2"/>
+    <path d="M40,${FLOOR+10} H870" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none"/>
+    <g class="hair" stroke="#6b5b4a" stroke-width="1.4" fill="none" stroke-linecap="round"><path d="M250,${FLOOR-2} q6,-6 12,0 t12,0"/><path d="M300,${FLOOR-1} q5,-7 10,0 t10,0"/><path d="M200,${FLOOR-1} q7,-5 14,0"/><path d="M420,${FLOOR-2} q6,-6 12,0 t12,0"/></g></g>`;
+  if (kind==='shelf') return wall+`<g class="floor">
+    <rect x="0" y="${FLOOR}" width="${W}" height="14" fill="#8b6b4b"/><rect x="0" y="${FLOOR+14}" width="${W}" height="${H-FLOOR-14}" fill="rgba(0,0,0,.08)"/>
+    <g transform="translate(330,${FLOOR-22})"><rect width="260" height="22" rx="4" fill="#2d3036"/>${[0,1,2].map(r=>Array.from({length:14},(_,i)=>`<rect x="${8+i*18}" y="${3+r*6.5}" width="14" height="5" rx="1" fill="#464a52"/>`).join('')).join('')}</g>
+    <g transform="translate(700,${FLOOR})"><rect x="0" y="-70" width="22" height="70" rx="2" fill="#7a4b3a"/><rect x="26" y="-86" width="20" height="86" rx="2" fill="#3f5f7a"/><rect x="50" y="-62" width="24" height="62" rx="2" fill="#b7903c"/><rect x="78" y="-78" width="18" height="78" rx="2" fill="#56626e"/></g>
+    <g class="dust" fill="rgba(120,120,130,.5)"><circle cx="120" cy="${FLOOR-3}" r="2"/><circle cx="150" cy="${FLOOR-2}" r="1.5"/><circle cx="200" cy="${FLOOR-3}" r="2.2"/><circle cx="640" cy="${FLOOR-2}" r="1.8"/></g></g>`;
+  return wall+board;
+}
+
+/* ---------- stage ---------- */
+function stageSVG(id, cfg={}){
+  const {floor='wood', head='brush', tool=null, aria='Vacuum illustration'} = cfg;
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="${NS}" role="img" aria-label="${aria}">${DEFS(id)}
+  <g class="scene">${gFloor(id,floor)}</g>
+  <g class="headG">${head==='brush'?gBrush(id):head==='mop'?gMop(id):''}</g>
+  <g class="stickG">
+    <g class="mv-rod">${gRod()}</g>
+    <g class="mv-body">
+      <g transform="translate(0,${-ROD})">${gBody(id)}</g>
+      <g class="mv-batt"><g transform="translate(0,${-ROD})">${gBattery()}</g></g>
+      <g class="mv-chg" opacity="0"><g transform="translate(0,${-ROD})">${gCharger()}</g></g>
+      <g class="toolG"><g transform="translate(0,${-ROD})">${tool==='mini'?gMini():tool==='combo'?gCombo():tool==='flex'?gFlex():''}</g></g>
+    </g>
+  </g>
+  <g class="fx"></g><g class="labels"></g></svg>`;
+}
+function pose(svg, cfg={}){
+  const {head='brush', tool=null, handheld=false, tipX=380, top=FLOOR, tilt=TILT, scale=SCALE} = cfg;
+  const stick=svg.querySelector('.stickG'), headG=svg.querySelector('.headG'), rod=svg.querySelector('.mv-rod'), toolG=svg.querySelector('.toolG');
+  let ox, oy;
+  if (!handheld){
+    ox = HX; oy = top - CONTACT[head]*scale;
+    headG.setAttribute('transform', `translate(${ox} ${oy}) scale(${scale})`);
+    headG.style.display=''; rod.style.display=''; toolG.style.display='none';
+  } else {
+    const ty = -ROD + TIP[tool];
+    const [dx,dy] = S2G(0, ty, 0, 0, tilt, scale);
+    ox = tipX - dx; oy = top - dy;
+    headG.style.display='none'; rod.style.display='none'; toolG.style.display='';
+  }
+  stick.setAttribute('transform', `translate(${ox} ${oy}) rotate(${tilt}) scale(${scale})`);
+  return {ox, oy, tilt, scale, B2G:(x,y)=>S2G(x, y-ROD, ox, oy, tilt, scale), S2G:(x,y)=>S2G(x,y,ox,oy,tilt,scale), H2G:(x,y)=>[HX + x*scale, oy + y*scale]};
+}
+function mk(tag, attrs={}){ const e=document.createElementNS(NS,tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function addLabel(svg, pt, text, lx, ly, anchor='start'){
+  text = t(text); const g = mk('g',{class:'lbl'}); const tx = lx + (anchor==='start'?8:-8);
+  g.innerHTML = `<line x1="${pt[0]}" y1="${pt[1]}" x2="${lx}" y2="${ly}" stroke-width="1" stroke-dasharray="3 3" style="stroke:var(--muted)"/><circle cx="${pt[0]}" cy="${pt[1]}" r="3.5" style="fill:var(--gold)"/><circle cx="${lx}" cy="${ly}" r="2" style="fill:var(--muted)"/><text x="${tx}" y="${ly+4.5}" text-anchor="${anchor}" font-size="13.5" style="font-family:'IBM Plex Sans','Noto Sans Georgian',sans-serif;fill:var(--fg)">${text}</text>`;
+  svg.querySelector('.labels').appendChild(g); return g;
+}
+function callout(svg, x, y, text, o={}){
+  const {dur=1.6, bg='var(--gold)', fg='#15171c', size=14, stroke=null} = o; text = t(text);
+  const fs = size*SCALE_K(svg);
+  const g = mk('g');
+  g.innerHTML = `<rect y="${-fs-1}" height="${fs*2+2}" rx="${fs+1}" style="fill:${bg}${stroke?';stroke:'+stroke+';stroke-width:1.5':''}"/><text y="${fs*0.36}" text-anchor="middle" font-weight="600" font-size="${fs}" style="font-family:Sora,'Noto Sans Georgian',sans-serif;fill:${fg}">${text}</text>`;
+  svg.querySelector('.fx').appendChild(g);
+  let w = text.length*fs*0.62+28; try { const m = g.querySelector('text').getComputedTextLength(); if (m>0) w = m + fs*1.8; } catch(e){}
+  const r = g.querySelector('rect'); r.setAttribute('x', -w/2); r.setAttribute('width', w);
+  x = Math.max(w/2+8, Math.min(W-w/2-8, x)); y = Math.max(fs+10, Math.min(H-fs-10, y));
+  gsap.set(g,{x,y}); gsap.fromTo(g,{opacity:0, scale:.6, transformOrigin:'50% 50%'},{opacity:1, scale:1, duration:.35, ease:'back.out(2)'});
+  gsap.to(g,{opacity:0, duration:.4, delay:dur, onComplete:()=>g.remove()});
+  return g;
+}
+function clickRing(svg, pt, label='click'){
+  const c = mk('circle',{cx:pt[0], cy:pt[1], r:6, fill:'none', 'stroke-width':3, style:'stroke:var(--led)'});
+  svg.querySelector('.fx').appendChild(c);
+  gsap.to(c,{attr:{r:36}, opacity:0, duration:.7, ease:'power2.out', onComplete:()=>c.remove()});
+  if (label) callout(svg, pt[0], pt[1]-46, label, {dur:.9, bg:'var(--fg)', fg:'var(--bg)'});
+}
+function spin(el, speed=1){ if (RM) return gsap.to(el,{duration:0}); return gsap.to(el, {rotation:'+=360', duration: 0.6/speed, repeat:-1, ease:'none', transformOrigin:'50% 50%'}); }
+function waterStream(svg, x, yTop, yBottom){
+  const g = mk('g',{class:'stream', opacity:0});
+  g.innerHTML = `<rect x="${x-5}" y="${yTop-20}" width="30" height="14" rx="4" fill="#9aa3ad"/><rect x="${x-26}" y="${yTop-24}" width="26" height="8" rx="4" fill="#9aa3ad"/><rect x="${x}" y="${yTop}" width="7" height="${yBottom-yTop}" rx="3.5" fill="url(#${svg.dataset.id}-stream)"/><g class="splash" style="fill:var(--water)"><circle cx="${x-14}" cy="${yBottom-4}" r="2.5"/><circle cx="${x+22}" cy="${yBottom-6}" r="2"/><circle cx="${x+10}" cy="${yBottom+6}" r="1.8"/><circle cx="${x-6}" cy="${yBottom+8}" r="1.5"/></g>`;
+  svg.querySelector('.fx').appendChild(g); return g;
+}
+function dryBadge(svg, x, y, text='24 h air dry'){
+  text = t(text); const k = SCALE_K(svg), fs = 14*k;
+  const g = mk('g',{class:'badge', opacity:0});
+  g.innerHTML = `<rect y="${-26*k}" height="${52*k}" rx="${12*k}" stroke-width="1.5" style="fill:var(--surface);stroke:var(--line)"/><circle cy="0" r="${11*k}" fill="none" stroke-width="2.5" style="stroke:var(--gold)"/><path fill="none" stroke-width="2.5" stroke-linecap="round" style="stroke:var(--gold)"/><text y="${5*k}" font-size="${fs}" font-weight="600" style="font-family:Sora,'Noto Sans Georgian',sans-serif;fill:var(--fg)">${text}</text>`;
+  svg.querySelector('.fx').appendChild(g);
+  let tw = text.length*fs*0.62; try { const m = g.querySelector('text').getComputedTextLength(); if (m>0) tw = m; } catch(e){}
+  const w = tw + 70*k, x0 = -w/2;
+  g.querySelector('rect').setAttribute('x', x0); g.querySelector('rect').setAttribute('width', w);
+  g.querySelector('circle').setAttribute('cx', x0+26*k);
+  g.querySelector('path').setAttribute('d', `M${x0+26*k},${-7*k} V0 L${x0+31*k},${3*k}`);
+  g.querySelector('text').setAttribute('x', x0+44*k);
+  x = Math.max(w/2+8, Math.min(W-w/2-8, x));
+  gsap.set(g,{x,y}); return g;
+}
+function iconSVG(inner, vb, id){ return `<svg viewBox="${vb}" xmlns="${NS}" aria-hidden="true">${DEFS(id)}${inner}</svg>`; }
+function stepsUI(listEl, tl, labels, onSeek){
+  const items = [...listEl.querySelectorAll('li[data-step]')];
+  const seg = (i)=>[labels[i], labels[i+1]||'end'];
+  items.forEach((li,i)=>{ li.addEventListener('click',()=>{ if(onSeek) onSeek(); seekTL(tl, ...seg(i)); }); });
+  tl.eventCallback('onUpdate', ()=>{
+    const t = tl.time(); let cur=-1;
+    if (t > 0.001) labels.forEach((l,i)=>{ if (t >= tl.labels[l]-0.001) cur=i; });
+    const finished = t >= (tl.labels.end||tl.duration())-0.01;
+    items.forEach((li,i)=>{ li.classList.toggle('active', i===cur && !finished); li.classList.toggle('done', i<cur || finished); });
+  });
+}
+
+/* ================= sections ================= */
+const q=(root,s)=>root.querySelector(s);
+const qa=(root,s)=>[...root.querySelectorAll(s)];
+function buildStage(el, id, cfg){ const hint=el.querySelector('.hint'); el.innerHTML=stageSVG(id,cfg); if(hint) el.appendChild(hint); const svg=el.querySelector('svg'); svg.dataset.id=id; svg._amb=[]; return svg; }
+function amb(svg, tw){ svg._amb.push(tw); return tw; }
+function killAmb(svg){ (svg._amb||[]).forEach(t=>t.kill()); svg._amb=[]; (svg._padTw||[]).forEach(t=>t.kill()); svg._padTw=[]; }
+function clearFx(svg){ q(svg,'.fx').innerHTML=''; }
+function seekTL(tl,a,b){ gsap.killTweensOf(tl); tl.pause(); tl.tweenFromTo(a,b); }
+function resetTL(tl, svg){ gsap.killTweensOf(tl); tl.pause(0); if(svg) clearFx(svg); }
+function brushAmbient(svg, speed=1){ amb(svg, spin(q(svg,'.roller'), speed)); amb(svg, gsap.to(q(svg,'.beam'),{opacity:.6,duration:.4})); if(!RM) amb(svg, gsap.to(q(svg,'.led'),{opacity:.5,duration:1.2,yoyo:true,repeat:-1,ease:'sine.inOut'})); }
+function padsRun(svg, on, flow=1){
+  const pads=qa(svg,'.pad'), drops=q(svg,'.drops'), dots=qa(svg,'.drops circle'), wet=q(svg,'.wet');
+  (svg._padTw||[]).forEach(t=>t.kill()); svg._padTw=[]; const add=t=>{ svg._padTw.push(t); return t; };
+  if(!on){ add(gsap.to(drops,{opacity:0,duration:.3})); add(gsap.to(wet,{opacity:0,duration:.3})); return; }
+  if(!RM) add(gsap.to(pads,{attr:{'stroke-dashoffset':-120},duration:2.2,repeat:-1,ease:'none'}));
+  add(gsap.to(drops,{opacity:flow?1:0,duration:.3})); add(gsap.to(wet,{opacity:flow?.55:.12,duration:.4}));
+  if(flow){ if(RM) add(gsap.set(dots,{y:0,opacity:1})); else add(gsap.fromTo(dots,{y:-22,opacity:0},{y:0,opacity:1,duration:.7,ease:'power1.in',stagger:{each:.25,repeat:-1}})); }
+}
+
+/* ---------- hero ---------- */
+(function hero(){
+  const el=document.getElementById('st-hero'); const svg=buildStage(el,'hero',{floor:'wood',head:'brush',aria:'Assembled R10 Pro Aqua on a wooden floor with part labels'});
+  const P=pose(svg,{head:'brush'}); svg.setAttribute('role','group');
+  amb(svg, spin(q(svg,'.roller'), .3));
+  if(!RM){ amb(svg, gsap.to(q(svg,'.beam'),{opacity:.5,duration:1.6,yoyo:true,repeat:-1,ease:'sine.inOut'})); amb(svg, gsap.to(q(svg,'.led'),{opacity:.45,duration:1.6,yoyo:true,repeat:-1,ease:'sine.inOut'})); } else { gsap.set(q(svg,'.beam'),{opacity:.4}); }
+  function drawLabels(){ q(svg,'.labels').innerHTML='';
+  const L=[
+    [P.B2G(-56,-198),'HEPA filter behind the exhaust cap',400,64,'end','Pull it out from the front. Wash every 4–6 months.'],
+    [P.B2G(-6,-108),'Dust cup · 600 ml',400,176,'end','Opens from the bottom. Empty after every session.'],
+    [P.B2G(64,-188),'Display + mode button',700,112,'start','Battery % on screen. The button under it cycles Eco → Standard → Turbo.'],
+    [P.B2G(45,-135),'Trigger · hold to run',700,176,'start','Release to stop. Tap the trigger lock to keep it running.'],
+    [P.B2G(67,-50),'Battery · slides off',700,250,'start','Removable 2500 mAh pack. Charger plugs into its back.'],
+    [P.S2G(0,-140),'Extension rod',560,420,'start','Grey release button at the top. Pull it off for handheld use.'],
+    [P.H2G(-60,40),'Multi-surface brush · LEDs · carpet switch',70,450,'start','Switch ON for carpet and rugs, OFF for hard floors.'],
+  ];
+  L.forEach(([pt,t,lx,ly,an,desc])=>{ const g=addLabel(svg,pt,t,lx,ly,an); g.style.cursor='pointer'; g.setAttribute('tabindex','0'); g.setAttribute('role','button');
+    const go=()=>{ clickRing(svg,pt,null); callout(svg, pt[0]+(an==='end'?-40:40), pt[1]-40, desc, {dur:2.6, size:13, bg:'var(--surface)', fg:'var(--fg)', stroke:'var(--line)'}); };
+    g.addEventListener('click',go); g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();go();} }); });
+  }
+  drawLabels(); onLang.push(drawLabels);
+})();
+
+/* ---------- parts grid ---------- */
+(function parts(){
+  const PARTS=[
+    {name:'Main body', tag:'MOTOR · CUP · DISPLAY', desc:'425 W motor, 600 ml cup with cyclone and metal pre-filter, HEPA filter behind the gold exhaust cap, trigger and round display.', svg:iconSVG(gBody('ic-body')+gBattery(),'-90 -248 210 262','ic-body')},
+    {name:'Battery pack', tag:'2500 mAh · REMOVABLE', desc:'Slides onto the bottom of the grip. Release tab and charging port on the back.', svg:iconSVG(gBattery(),'28 -74 84 48','ic-batt')},
+    {name:'Extension rod', tag:'TUBE · CLICKS AT BOTH ENDS', desc:'Connects the body to either floor head. The release buttons sit on the body and on the head. Also carries the small tools up to ceilings and curtain rails.', svg:iconSVG(`<g transform="rotate(90)">${gRod()}</g>`,'-12 -24 304 48','ic-rod')},
+    {name:'Multi-surface brush', tag:'V-ROLLER · FRONT LEDS', desc:'Main floor head for wood, tile and carpet. Switch on top: ON for carpet, OFF for hard floors. Blue LEDs light the path.', svg:iconSVG(gBrush('ic-brush'),'-135 -5 215 70','ic-brush')},
+    {name:'Spin mop head', tag:'200 ml TANK · 2 PADS · 116 rpm', desc:'Rotating pads with automatic water feed. Sealed hard floors only. Plug and outflow switch on top.', svg:iconSVG(gMop('ic-mop'),'-140 -12 220 86','ic-mop')},
+    {name:'Motorized mini-brush', tag:'SOFT FABRICS', desc:'Powered roller for sofas, mattresses, bedding, car seats and pet hair. Not for silk.', svg:iconSVG(gMini(),'-48 -4 92 76','ic-mini')},
+    {name:'Wide combination tool', tag:'DUSTING + CREVICE', desc:'Bristles for dusting shelves, keyboards and blinds. The small button on its side releases the brush; with the bristles out of the way it works as a wide nozzle for corners and car interiors.', svg:iconSVG(gCombo(),'-32 -4 64 108','ic-combo')},
+    {name:'Flexible combination tool', tag:'BENDABLE · NARROW GAPS', desc:'Long, thin nozzle with a bendable neck and a small brush at the tip. Reaches behind radiators, under car seats and into tight gaps.', svg:iconSVG(gFlex(),'-40 -4 80 176','ic-flex')},
+    {name:'Spare mop pads', tag:'1 EXTRA PAIR', desc:'Microfiber pads with a centre hole that locates on the plate. Rinse after use, air dry.', svg:iconSVG(gPads(),'-80 -40 160 80','ic-pads')},
+    {name:'Charger', tag:'ORIGINAL ONLY', desc:'Plugs into the port on the battery. Only the Dreame adapter from the box; others can damage the pack.', svg:iconSVG(gChargerIcon(),'-70 -30 140 60','ic-chg')},
+    {name:'Wall mount', tag:'2 SCREWS · 2 PLUGS · TEMPLATE', desc:'Optional. Hang the vacuum with rod and brush attached, near a socket.', svg:iconSVG(gMount(),'-45 -58 90 116','ic-mount')},
+  ];
+  const renderParts=()=>{ document.getElementById('parts').innerHTML=PARTS.map(p=>`<div class="part"><div class="ico">${p.svg}</div><span class="tag">${t(p.tag)}</span><h3>${t(p.name)}</h3><p>${t(p.desc)}</p></div>`).join(''); };
+  renderParts(); onLang.push(renderParts);
+})();
+
+/* ---------- assembly ---------- */
+(function assembly(){
+  const el=document.getElementById('st-asm'); const svg=buildStage(el,'asm',{floor:'wood',head:'brush',tool:'combo',aria:'Assembly animation: battery, rod, brush, charger, handheld'});
+  const P=pose(svg,{head:'brush',scale:.84});
+  const body=q(svg,'.mv-body'), rod=q(svg,'.mv-rod'), batt=q(svg,'.mv-batt'), chg=q(svg,'.mv-chg'), headG=q(svg,'.headG'), toolG=q(svg,'.toolG'), tool=q(svg,'.toolG .tool'), pct=q(svg,'.d-pct'), arc=q(svg,'.d-arc');
+  toolG.style.display='';
+  const EXP={body:-100, rod:-50};
+  gsap.set(body,{y:EXP.body}); gsap.set(rod,{y:EXP.rod}); gsap.set(batt,{x:60,y:50}); gsap.set(chg,{x:70,opacity:0}); gsap.set(tool,{opacity:0,y:70});
+  const st={pct:20}; const setPct=()=>{ pct.textContent=Math.round(st.pct); }; setPct(); arc.setAttribute('stroke','#f0a53c');
+  const bodyPt=(x,y)=>P.S2G(x, y-ROD+gsap.getProperty(body,'y'));
+  const tl=gsap.timeline({paused:true, defaults:{ease:'power2.inOut'}});
+  tl.addLabel('s0')
+    .to(batt,{x:0,y:0,duration:.9,ease:'power3.inOut'})
+    .call(()=>clickRing(svg, bodyPt(67,-50)))
+    .addLabel('s1','+=0.7')
+    .to(body,{y:EXP.rod,duration:.9})
+    .call(()=>clickRing(svg, bodyPt(0,-6)))
+    .addLabel('s2','+=0.7')
+    .to([body,rod],{y:0,duration:.9})
+    .call(()=>clickRing(svg, P.S2G(0,4)))
+    .addLabel('s3','+=0.7')
+    .to(chg,{x:0,opacity:1,duration:.7})
+    .to(arc,{stroke:'#39d98a',duration:.2},'<')
+    .to(st,{pct:100,duration:2.4,ease:'none',onUpdate:setPct})
+    .call(()=>callout(svg, ...P.B2G(64,-258), '100% · about 4 h from empty', {dur:1.8}))
+    .addLabel('s4','+=0.9')
+    .to(chg,{x:70,opacity:0,duration:.5})
+    .call(()=>clickRing(svg, bodyPt(16,-26), 'press release'))
+    .to(rod,{y:90,opacity:0,duration:.8},'+=0.4')
+    .to(headG,{opacity:.3,duration:.6},'<')
+    .to(body,{y:-50,duration:.8},'<')
+    .to(tool,{opacity:1,y:0,duration:.7,ease:'back.out(1.5)'})
+    .call(()=>clickRing(svg, bodyPt(0,-6)))
+    .addLabel('end','+=0.6');
+  stepsUI(document.getElementById('asm-steps'), tl, ['s0','s1','s2','s3','s4']);
+  document.getElementById('asm-play').onclick=()=>{ clearFx(svg); seekTL(tl,'s0','end'); };
+  document.getElementById('asm-reset').onclick=()=>{ resetTL(tl,svg); setPct(); };
+})();
+
+/* ---------- which head where ---------- */
+(function heads(){
+  const SURF=[
+    {k:'hard', label:'Hard floors', sub:'wood · laminate · vinyl · tile', floor:'wood', head:'brush', sw:false,
+     title:'Multi-surface brush, switch OFF', why:'The roller’s soft silicone paddles lift fine dust off sealed floors without flicking it away, and the front LEDs show the dust you would otherwise miss.',
+     kv:[['Head','Multi-surface brush'],['Brush switch','OFF'],['Mode','Eco for daily dust, Standard for crumbs'],['Technique','Slow forward-and-back passes, overlapping by a third']],
+     note:{t:'Keep the floor dry when vacuuming. Wet patches are a job for the mop head, never for the roller.',k:'info'}},
+    {k:'carpet', label:'Carpet & rugs', sub:'also baby play mats', floor:'carpet', head:'brush', sw:true,
+     title:'Multi-surface brush, switch ON', why:'Switch ON drives the roller’s stiff rubber edge into the pile to loosen grit and hair. The V-shaped roller edges keep hair and fur from tangling.',
+     kv:[['Head','Multi-surface brush'],['Brush switch','ON'],['Mode','Standard; Turbo for pet hair and ground-in grit'],['Technique','Two slow passes at right angles']],
+     note:{t:'Never put the spin mop head on carpet, rugs or play mats. The pads soak the fibres while the pump keeps feeding water.',k:'warn'}},
+    {k:'mop', label:'Mopping hard floors', sub:'tile · parquet · laminate · lino', floor:'tile', head:'mop',
+     title:'Spin mop head', why:'Dreame calls it 2-in-1: suction and two pads at 116 rpm work in the same pass. Water feeds automatically from the 200 ml tank through the outflow switch.',
+     kv:[['Head','Spin mop head'],['Outflow','ON while mopping, OFF before storage'],['Mode','Eco or Standard'],['Prep','Dampen and wring the pads first']],
+     note:{t:'Sealed hard floors only. Wring the pads well on wood-based floors and never leave a puddle standing.',k:'warn'}},
+    {k:'sofa', label:'Sofa, bed, mattress', sub:'pet beds · car seats', floor:'sofa', tool:'mini', handheld:true, tipX:350,
+     title:'Motorized mini-brush, handheld', why:'The small powered roller agitates fabric so embedded hair and dust mites come loose. Pull the rod off and click the brush straight onto the body.',
+     kv:[['Tool','Motorized mini-brush'],['Mode','Standard; Turbo for pet beds'],['Technique','Short strokes with the fabric pulled taut'],['Avoid','Silk and loose weaves']],
+     note:{t:'Not recommended on fragile fabrics such as silk.',k:'info'}},
+    {k:'shelf', label:'Shelves, keyboard, corners', sub:'blinds · lampshades · car dash', floor:'shelf', tool:'combo', handheld:true, tipX:440, top:FLOOR-22,
+     title:'Wide combination tool, handheld', why:'With the bristles it dusts keyboards, blinds and bookshelves without scratching. Without them it is a wide nozzle for corners, skirting and between cushions.',
+     kv:[['Tool','Wide combination tool'],['Mode','Eco on electronics, Standard elsewhere'],['Bristles','On for dusting, off for crevices'],['Attach','On the body, or on the rod for ceilings']],
+     note:{t:'Put this tool on the rod for ceiling corners and curtain rails.',k:'ok'}},
+    {k:'gaps', label:'Narrow gaps, radiators, car', sub:'between seats · behind radiators · window tracks', floor:'sofa', tool:'flex', handheld:true, tipX:430,
+     title:'Flexible combination tool, handheld', why:'The long nozzle bends at the neck, so it reaches where the body cannot: between car seats, behind radiators, along window tracks and under low furniture. The small brush at the tip loosens dust before it is sucked in.',
+     kv:[['Tool','Flexible combination tool'],['Mode','Standard; Turbo for car mats'],['Technique','Bend the neck first, then short in-and-out strokes'],['Attach','On the body, or on the rod for high gaps']],
+     note:{t:'Bend it only as far as it goes freely.',k:'info'}},
+  ];
+  const chips=document.getElementById('surf-chips'), el=document.getElementById('st-heads'), panel=document.getElementById('heads-panel');
+  let current=null;
+  const renderChips=()=>{ const cur=current||'hard'; chips.innerHTML=SURF.map((s)=>`<button type="button" class="chip${s.k===cur?' active':''}" aria-pressed="${s.k===cur}" data-k="${s.k}"><span class="sw" style="background:${s.head==='mop'?'var(--water)':s.handheld?'var(--muted)':'var(--gold)'}"></span>${t(s.label)}</button>`).join(''); };
+  const renderPanel=(s)=>{ panel.innerHTML=`<span class="eyebrow">${t(s.sub)}</span><h3>${t(s.title)}</h3><p style="font-size:14.5px">${t(s.why)}</p><dl class="kv">${s.kv.map(([a,b])=>`<dt>${t(a)}</dt><dd>${t(b)}</dd>`).join('')}</dl><div class="note ${s.note.k}">${t(s.note.t)}</div>`; };
+  renderChips();
+  onLang.push(()=>{ renderChips(); const s=SURF.find(x=>x.k===current); if(s) renderPanel(s); });
+  function show(k){
+    const s=SURF.find(x=>x.k===k); if(!s||current===k) return; current=k;
+    qa(chips,'.chip').forEach(c=>{ const on=c.dataset.k===k; c.classList.toggle('active',on); c.setAttribute('aria-pressed',on); });
+    if(el.querySelector('svg')) killAmb(el.querySelector('svg'));
+    const svg=buildStage(el,'hd-'+k,{floor:s.floor,head:s.head||'brush',tool:s.tool||null,aria:`${s.title} on ${s.label}`});
+    const P=pose(svg,{head:s.head||'brush',tool:s.tool,handheld:!!s.handheld,tipX:s.tipX,top:s.top||FLOOR});
+    if(!s.handheld){
+      gsap.from(q(svg,'.head'),{x:-160,opacity:0,duration:.8,ease:'power3.out'});
+      gsap.from(q(svg,'.mv-body'),{y:-70,opacity:0,duration:.8,ease:'power3.out',delay:.15});
+      gsap.from(q(svg,'.mv-rod'),{opacity:0,duration:.5,delay:.2});
+      amb(svg, gsap.delayedCall(.9,()=>{ if(svg.isConnected) clickRing(svg,P.S2G(0,4)); }));
+      if(s.head==='brush'){ brushAmbient(svg, s.sw?1.4:.9);
+        const knob=q(svg,'.sw-knob'); if(s.sw){ amb(svg, gsap.to(knob,{attr:{cx:35},fill:'#e0b84a',duration:.4,delay:1.2})); amb(svg, gsap.delayedCall(1.2,()=>{ if(svg.isConnected) callout(svg,...P.H2G(29,-14),'brush switch ON',{dur:2}); })); } else { amb(svg, gsap.delayedCall(1.2,()=>{ if(svg.isConnected) callout(svg,...P.H2G(29,-14),'brush switch OFF',{dur:2}); })); } }
+      if(s.head==='mop'){ const st={h:0}; const w=q(svg,'.water'); amb(svg, gsap.to(st,{h:22,duration:1,delay:.6,onUpdate:()=>{w.setAttribute('height',st.h);w.setAttribute('y',22-st.h);}})); amb(svg, gsap.delayedCall(1.1,()=>{ if(svg.isConnected) padsRun(svg,true,1); })); }
+    } else {
+      gsap.from(q(svg,'.mv-body'),{y:-90,opacity:0,duration:.8,ease:'power3.out'});
+      const tipPt=P.S2G(0,-ROD+TIP[s.tool]);
+      amb(svg, gsap.delayedCall(.9,()=>{ if(svg.isConnected) clickRing(svg,P.S2G(0,-ROD-6)); }));
+      if(s.tool==='mini'){ amb(svg, spin(q(svg,'.roller'),1.2)); amb(svg, gsap.delayedCall(1.3,()=>{ if(svg.isConnected) callout(svg,tipPt[0]-10,tipPt[1]-70,'powered roller lifts hair',{dur:2}); })); }
+      if(s.tool==='flex'){ const tip=q(svg,'.flex-tip'); if(!RM) amb(svg, gsap.to(tip,{rotation:-34,duration:1.1,yoyo:true,repeat:-1,repeatDelay:.6,ease:'sine.inOut',transformOrigin:'0 0'})); amb(svg, gsap.delayedCall(1.3,()=>{ if(svg.isConnected) callout(svg,tipPt[0]-10,tipPt[1]-80,'bendable neck reaches into gaps',{dur:2.2}); })); }
+      if(s.tool==='combo'){ const br=q(svg,'.bristles'); if(!RM) amb(svg, gsap.to(br,{y:-12,duration:.9,yoyo:true,repeat:-1,repeatDelay:1.2,ease:'power2.inOut'})); amb(svg, gsap.delayedCall(1.3,()=>{ if(svg.isConnected) callout(svg,tipPt[0]+10,tipPt[1]-80,'bristles on for dusting, off for crevices',{dur:2.2}); })); }
+    }
+    renderPanel(s);
+  }
+  chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(c) show(c.dataset.k); });
+  show('hard');
+})();
+
+/* ---------- use it ---------- */
+(function use(){
+  const el=document.getElementById('st-use'); const svg=buildStage(el,'use',{floor:'wood',head:'brush',aria:'Vacuum running on a wooden floor, picking up crumbs'});
+  const P=pose(svg,{head:'brush'});
+  const roller=q(svg,'.roller'), beam=q(svg,'.beam'), led=q(svg,'.led'), dpct=q(svg,'.d-pct'), darc=q(svg,'.d-arc'), dlock=q(svg,'.d-lock'), trig=q(svg,'.trigger'), body=q(svg,'.mv-body');
+  const ring=document.getElementById('d-ring'), pctT=document.getElementById('d-pct'), lockI=document.getElementById('d-lock'), bolt=document.getElementById('d-bolt'), segs=qa(document,'#d-segs rect'), modeT=document.getElementById('d-mode');
+  const uStatus=document.getElementById('u-status'), uRem=document.getElementById('u-remaining'), bTrig=document.getElementById('u-trigger'), bLock=document.getElementById('u-lock'), bMode=document.getElementById('u-mode'), bChg=document.getElementById('u-charge'), uTip=document.getElementById('u-tip');
+  const MODES=[{name:'Eco',min:90,color:'#39d98a',tip:'Eco: quietest and longest. Daily hard floors and light dust.',spin:.8,rate:.45},{name:'Standard',min:30,color:'#4fb3ff',tip:'Standard: the everyday setting for mixed floors, rugs and crumbs.',spin:1.3,rate:.26},{name:'Turbo',min:7,color:'#f0a53c',tip:'Turbo: short bursts for carpets, pet hair and spills. It heats the battery, so let the vacuum cool for 30 minutes before charging.',spin:2.1,rate:.13}];
+  const S={pct:100,mode:0,held:false,locked:false,charging:false,running:false,spinTw:null,bob:null,last:performance.now(),acc:0};
+  const C=2*Math.PI*98;
+  let trigDown=false;
+  function setTrig(){ const d=S.held||(S.locked&&S.running); if(d===trigDown) return; trigDown=d; gsap.to(trig,{x:d?3:0,duration:.15,overwrite:'auto'}); }
+  function renderFast(){
+    const m=MODES[S.mode];
+    ring.setAttribute('stroke-dashoffset', C*(1-S.pct/100)); ring.setAttribute('stroke', S.pct>20?'#39d98a':S.pct>10?'#f0a53c':'#ef6b6b');
+    pctT.textContent=Math.round(S.pct); dpct.textContent=Math.round(S.pct);
+    uRem.textContent = S.charging? `${t('charging')} · ${Math.round(S.pct)}% · ${t('demo speed')}` : `≈ ${Math.max(0,Math.round(S.pct/100*m.min))} ${t('min left in')} ${t(m.name)}`;
+  }
+  function render(){
+    const m=MODES[S.mode]; renderFast();
+    lockI.setAttribute('opacity', S.locked?1:.3); dlock.setAttribute('opacity', S.locked?1:.3);
+    bolt.setAttribute('opacity', S.charging?1:0);
+    segs.forEach((r,i)=>r.setAttribute('fill', i<=S.mode?m.color:'#1e2026')); modeT.textContent=m.name.toUpperCase(); darc.setAttribute('stroke', m.color);
+    uStatus.textContent = S.charging?t('Charging. It will not run while plugged in.'): S.pct<=0?t('Battery empty. Plug in the charger.'): S.running?`${t('Running')} · ${t(m.name)}${S.locked?' · '+t('continuous'):''}`:t('Stopped');
+    bTrig.classList.toggle('on',S.held); bTrig.setAttribute('aria-pressed',S.held); bLock.classList.toggle('on',S.locked); bLock.setAttribute('aria-pressed',S.locked); bChg.classList.toggle('on',S.charging); bChg.setAttribute('aria-pressed',S.charging);
+    uTip.textContent=t(m.tip);
+    beam.setAttribute('opacity', S.running?.7:0); led.setAttribute('opacity', S.running?1:.5);
+    setTrig();
+  }
+  function setRunning(on){
+    if(on && (S.charging || S.pct<=0)) on=false;
+    if(on===S.running){ render(); return; }
+    S.running=on;
+    if(on){ S.spinTw=spin(roller, MODES[S.mode].spin); if(!RM) S.bob=gsap.to(body,{y:4,duration:.6,yoyo:true,repeat:-1,ease:'sine.inOut'}); arm(); }
+    else { if(S.spinTw){S.spinTw.kill();S.spinTw=null;} if(S.bob){S.bob.kill();S.bob=null;} gsap.to(body,{y:0,duration:.3}); if(S.pct<=0) S.locked=false; }
+    render();
+  }
+  function particle(){
+    const c=mk('circle',{cx:60+Math.random()*110, cy:FLOOR-2-Math.random()*4, r:1.6+Math.random()*1.6, fill:'#9a7a52'});
+    q(svg,'.fx').appendChild(c); const mouth=P.H2G(-118,52);
+    gsap.to(c,{attr:{cx:mouth[0],cy:mouth[1]},opacity:0,duration:.55+Math.random()*.3,ease:'power2.in',onComplete:()=>c.remove()});
+  }
+  let rafOn=false;
+  function arm(){ if(rafOn) return; rafOn=true; S.last=performance.now(); requestAnimationFrame(tick); }
+  function tick(now){
+    const dt=Math.min(.1,(now-S.last)/1000); S.last=now; const m=MODES[S.mode];
+    if(S.running){ S.pct=Math.max(0,S.pct-dt*(100/m.min)); S.acc+=dt; if(S.acc>m.rate){S.acc=0;particle();} if(S.pct<=0) setRunning(false); else renderFast(); }
+    else if(S.charging && S.pct<100){ S.pct=Math.min(100,S.pct+dt*6); renderFast(); if(S.pct>=100) render(); }
+    if(S.running || (S.charging && S.pct<100)) requestAnimationFrame(tick); else rafOn=false;
+  }
+  const down=e=>{ if(e.button!==undefined && e.button!==0) return; e.preventDefault(); S.held=true; setRunning(true); };
+  const up=()=>{ if(!S.held) return; S.held=false; if(!S.locked) setRunning(false); else render(); };
+  bTrig.addEventListener('pointerdown',down); ['pointerup','pointercancel','pointerleave'].forEach(ev=>bTrig.addEventListener(ev,up)); window.addEventListener('pointerup',up);
+  bTrig.addEventListener('contextmenu',e=>e.preventDefault());
+  bTrig.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();down(e);} }); bTrig.addEventListener('keyup',e=>{ if(e.key===' '||e.key==='Enter'){e.preventDefault();up();} });
+  bLock.onclick=()=>{ if(S.charging) return; if(!S.running){ callout(svg,...P.B2G(79,-190),'press the trigger first',{dur:1.4}); return; } S.locked=!S.locked; clickRing(svg,P.B2G(79,-143),null); if(!S.locked&&!S.held) setRunning(false); else render(); };
+  bMode.onclick=()=>{ S.mode=(S.mode+1)%3; if(S.running&&S.spinTw){S.spinTw.kill(); S.spinTw=spin(roller,MODES[S.mode].spin);} clickRing(svg,P.B2G(64,-160),null); render(); };
+  bChg.onclick=()=>{ S.charging=!S.charging; if(S.charging){ S.held=false; S.locked=false; setRunning(false); arm(); } render(); };
+  render(); onLang.push(render);
+})();
+
+/* ---------- mop ---------- */
+(function mop(){
+  const el=document.getElementById('st-mop'); const svg=buildStage(el,'mop',{floor:'tile',head:'mop',aria:'Spin mop head: pads, water, attach, run'});
+  const P=pose(svg,{head:'mop'});
+  const headG=q(svg,'.headG'), stick=q(svg,'.stickG'), pads=qa(svg,'.pad'), water=q(svg,'.water'), plug=q(svg,'.plug'), knob=q(svg,'.flow-knob'), body=q(svg,'.mv-body'), rod=q(svg,'.mv-rod');
+  const FLOWX={0:20,1:33}; let flow=1, running=false;
+  gsap.set(pads,{y:40,opacity:0}); gsap.set([body,rod],{y:-70});
+  const st={h:0}; const setWater=()=>{ water.setAttribute('height',st.h); water.setAttribute('y',22-st.h); };
+  const gl={x:0}; const glide=()=>{ headG.setAttribute('transform',`translate(${P.ox+gl.x} ${P.oy}) scale(${P.scale})`); stick.setAttribute('transform',`translate(${P.ox+gl.x} ${P.oy}) rotate(${TILT}) scale(${P.scale})`); };
+  const run=on=>{ running=on; padsRun(svg,on,flow); };
+  const tl=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}});
+  tl.addLabel('s0')
+    .call(()=>callout(svg,...P.H2G(-40,-70),'dampen · wring out · press on',{dur:1.6}))
+    .to(pads,{y:0,opacity:1,duration:.8,stagger:.3,ease:'back.out(1.4)'})
+    .call(()=>clickRing(svg,P.H2G(-86,63),null))
+    .addLabel('s1','+=0.6')
+    .to(plug,{y:-9,duration:.4})
+    .call(()=>callout(svg,...P.H2G(-100,-70),'clean water only · no chemicals',{dur:2}))
+    .to(st,{h:25,duration:1.4,ease:'none',onUpdate:setWater})
+    .to(plug,{y:0,duration:.4})
+    .addLabel('s2','+=0.6')
+    .to([body,rod],{y:0,duration:.9})
+    .call(()=>clickRing(svg,P.S2G(0,4)))
+    .addLabel('s3','+=0.6')
+    .call(()=>{ run(true); callout(svg,...P.H2G(-30,-70),'pads spin at 116 rpm',{dur:1.8}); })
+    .to(gl,{x:80,duration:1.8,ease:'sine.inOut',onUpdate:glide})
+    .to(gl,{x:0,duration:1.8,ease:'sine.inOut',onUpdate:glide})
+    .addLabel('end','+=0.2');
+  stepsUI(document.getElementById('mop-steps'), tl, ['s0','s1','s2','s3']);
+  document.getElementById('mop-play').onclick=()=>{ run(false); clearFx(svg); seekTL(tl,'s0','end'); };
+  document.getElementById('mop-reset').onclick=()=>{ run(false); resetTL(tl,svg); st.h=0; setWater(); gl.x=0; glide(); };
+  document.getElementById('mop-flow').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; flow=+b.dataset.f; qa(e.currentTarget,'button').forEach(x=>{ x.classList.toggle('active',x===b); x.setAttribute('aria-pressed',x===b); }); gsap.to(knob,{attr:{cx:FLOWX[flow]},duration:.3}); if(running) padsRun(svg,true,flow); callout(svg,...P.H2G(27,-30),['outflow OFF','outflow ON'][flow],{dur:1.4}); });
+})();
+
+/* ---------- clean & care ---------- */
+function clearAll(svg){ q(svg,'.fx').innerHTML=''; q(svg,'.labels').innerHTML=''; }
+function gBrushFront(){ return `<g class="bf">
+  <rect x="-16" y="-120" width="32" height="64" rx="8" fill="#34343c"/>
+  <rect x="-170" y="-60" width="340" height="110" rx="22" fill="#202026"/>
+  <rect x="-150" y="-50" width="300" height="2" opacity=".5" style="fill:var(--gold)"/>
+  <rect x="-150" y="-30" width="270" height="62" rx="8" fill="rgba(170,195,220,.18)" stroke="rgba(255,255,255,.25)"/>
+  <g class="rollerF">
+    <rect x="-146" y="-24" width="262" height="50" rx="25" fill="#3a3a43"/>
+    <path d="M-130,-16 L-104,18 L-78,-16 L-52,18 L-26,-16 L0,18 L26,-16 L52,18 L78,-16 L100,14" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--gold)"/>
+    <circle cx="-121" cy="1" r="9" fill="#15151a"/><circle cx="91" cy="1" r="9" fill="#15151a"/>
+    <g class="hair" stroke="#8a6a52" stroke-width="2" fill="none" stroke-linecap="round"><path d="M-60,-22 c10,15 -12,25 2,46"/><path d="M-48,-24 c-8,18 14,22 0,50"/><path d="M-20,-20 c12,10 -10,24 4,44"/><path d="M12,-24 c-6,14 12,20 2,48"/><path d="M34,-22 c10,12 -8,26 2,46"/><path d="M-90,-20 c8,14 -10,22 0,44"/></g>
+  </g>
+  <g class="dial" transform="translate(142,0)"><circle r="16" fill="#15151a" stroke="#4b4b54" stroke-width="2"/><rect x="-2" y="-11" width="4" height="22" rx="2" fill="#8a8a94"/></g>
+  <g class="arrow" opacity="0"><path d="M159,29.4 A34,34 0 0 0 159,-29.4" fill="none" stroke-width="2.5" stroke-dasharray="4 4" style="stroke:var(--led)"/><polygon points="153.8,-32.4 161,-32.9 157,-26" style="fill:var(--led)"/></g>
+  <g fill="#8ec5ff"><circle cx="-120" cy="44" r="4"/><circle cx="-60" cy="44" r="4"/></g>
+</g>`;}
+function gScissors(){ return `<g class="scissors" opacity="0"><g stroke="#cfd6e0" stroke-width="3.5" stroke-linecap="round" fill="none"><line x1="-16" y1="-22" x2="10" y2="12"/><line x1="16" y1="-22" x2="-10" y2="12"/></g><circle cx="-14" cy="20" r="7" fill="none" stroke="#cfd6e0" stroke-width="3.5"/><circle cx="14" cy="20" r="7" fill="none" stroke="#cfd6e0" stroke-width="3.5"/></g>`; }
+
+(function clean(){
+  const tabsEl=document.getElementById('clean-tabs'), el=document.getElementById('st-clean'), panel=document.getElementById('clean-panel');
+  const svgBase=(id,aria)=>`<svg viewBox="0 0 ${W} ${H}" xmlns="${NS}" role="img" aria-label="${aria}">${DEFS(id)}<rect width="${W}" height="${H}" fill="url(#${id}-wall)"/>`;
+  const ready=(id)=>{ const svg=el.querySelector('svg'); svg.dataset.id=id; svg._amb=[]; return svg; };
+  const SCENES=[
+    {k:'cup', label:'Dust cup', title:'Empty the cup over a bin',
+     steps:[['Power off','Unplug the charger and keep your finger off the trigger.'],['Hold the cup over the bin','Point the bottom of the dust cup into the bin, low enough that dust does not puff back out.'],['Press the grey button at the front','The bottom lid swings open and everything drops out.'],['Click the lid shut','Flip it up until it clicks. Do this after every session; suction fades once dust reaches the MAX line.']],
+     note:{t:'Once a month, wipe the cup with a damp, well-wrung cloth. The body, the brush motors and the battery never go under water.',k:'info'},
+     build(){
+       const id='cl-cup';
+       el.innerHTML=svgBase(id,'Emptying the dust cup into a bin')+`<g class="bin"><path d="M330,470 L358,588 L542,588 L570,470 Z" stroke-width="2" style="fill:var(--surface-2);stroke:var(--line)"/><ellipse cx="450" cy="470" rx="120" ry="12" stroke-width="2" style="fill:var(--surface);stroke:var(--line)"/><ellipse class="pile" cx="450" cy="572" rx="0" ry="7" fill="#b08a5c"/></g><g class="mvb"><g transform="translate(450,400) scale(1.7)">${gBody(id)}${gBattery()}</g></g><g class="fx"></g><g class="labels"></g></svg>`;
+       const svg=ready(id); const mvb=q(svg,'.mvb'), lid=q(svg,'.lid'), btn=q(svg,'.lid-btn'), pile=q(svg,'.pile'), debris=qa(svg,'.debris circle');
+       const tl=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}});
+       tl.addLabel('s0').call(()=>callout(svg,450,30,'charger unplugged · finger off the trigger',{dur:1.6})).to({},{duration:1.2})
+         .addLabel('s1').to(mvb,{y:30,duration:.8})
+         .addLabel('s2','+=0.4').to(btn,{x:-3,duration:.15,yoyo:true,repeat:1}).to(lid,{rotation:-105,transformOrigin:'100% 50%',duration:.5,ease:'power3.out'});
+       debris.forEach((c,i)=>tl.to(c,{attr:{cy:parseFloat(c.getAttribute('cy'))+158},opacity:0,duration:.75,ease:'power2.in'}, i?'<0.06':'-=0.25'));
+       tl.to(pile,{attr:{rx:74},duration:.6},'<0.35')
+         .addLabel('s3','+=0.5').to(lid,{rotation:0,duration:.45,ease:'power3.in'}).call(()=>clickRing(svg,[450-52.7, 400+gsap.getProperty(mvb,'y')-81.6]))
+         .addLabel('end','+=0.6');
+       return tl;
+     }},
+    {k:'filters', label:'Filters & cyclone', title:'Wash the cyclone, pre-filter and HEPA',
+     steps:[['Pull the dust cup off','Push the cup release and lift the cup away from the body.'],['Lift out the cyclone and pre-filter','Lift the cyclone handle, turn it until it stops, pull it out. The metal pre-filter sits on top.'],['Pull the HEPA filter out of the exhaust cap','It lives behind the gold ring at the front of the motor. Pull straight out.'],['Rinse under clean water','Turn the HEPA a full circle under the tap and tap out excess water. No detergent, no brushing, no fingers in the pleats.'],['Air dry 24 hours, then reassemble','Pre-filter every 3 months, cyclone every 6, HEPA every 4–6. Everything bone dry before it goes back.']],
+     note:{t:'A damp filter grows mould and kills suction. If in doubt, give it another day.',k:'warn'},
+     build(){
+       const id='cl-fil';
+       el.innerHTML=svgBase(id,'Taking out the cyclone, pre-filter and HEPA filter and rinsing them')+`<g transform="translate(520,430) scale(1.5)">${gBody(id)}${gBattery()}</g><g class="fx"></g><g class="labels"></g></svg>`;
+       const svg=ready(id); const cupG=q(svg,'.cupG'), pre=q(svg,'.prefilter'), cyc=q(svg,'.cyclone'), hepa=q(svg,'.hepa'), cap=q(svg,'.cap'); let ws=null;
+       gsap.set(q(svg,'.debris'),{opacity:0});
+       const tl=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}});
+       tl.addLabel('s0').to(cupG,{x:-10,y:95,duration:.9}).call(()=>callout(svg,450,30,'cup release → lift off',{dur:1.3}))
+         .addLabel('s1','+=0.5').to(pre,{x:-150,y:10,duration:.9}).to(cyc,{x:-150,y:70,duration:.9},'<0.15')
+         .addLabel('s2','+=0.5').to(cap,{x:-120,duration:.7}).to(hepa,{opacity:1,duration:.2},'<0.3').to(hepa,{x:-100,duration:.9},'<')
+         .addLabel('s3','+=0.5').call(()=>{ ws=waterStream(svg,312,60,440); gsap.to(ws,{opacity:1,duration:.3}); callout(svg,620,60,'clean water · turn it 360°',{dur:1.8}); }).to({},{duration:1.8}).call(()=>{ if(ws) gsap.to(ws,{opacity:0,duration:.4,onComplete:()=>ws&&ws.remove()}); })
+         .addLabel('s4','+=0.3').call(()=>{ const b=dryBadge(svg,150,540,'24 h air dry'); gsap.to(b,{opacity:1,duration:.4}); addLabel(svg,[313,133],'HEPA · every 4–6 months',236,66,'end'); addLabel(svg,[295,235],'Pre-filter · every 3 months',206,300,'end'); addLabel(svg,[295,385],'Cyclone · every 6 months',206,462,'end'); })
+         .to({},{duration:1}).addLabel('end');
+       return tl;
+     }},
+    {k:'roller', label:'Roller brush', title:'Free the roller and cut the hair off',
+     steps:[['Turn the lock counterclockwise','The dial on the end of the brush head. Turn until it stops.'],['Slide the roller out','Pull it sideways out of the housing.'],['Cut the hair off','Run scissors along the roller; the V-groove is where hair collects. Wipe the clear cover and the notch with a dry cloth.'],['Rinse with clean water','Only when it is dirty. No soap.'],['Stand it upright for 24 hours','Fully dry before it goes back in, then reverse the steps and turn the lock back.']],
+     note:{t:'Mini-brush roller: use a coin to turn its lock counterclockwise until it clicks, lift the roller out, rinse, dry 24 h, refit in reverse.',k:'info'},
+     build(){
+       const id='cl-rol';
+       el.innerHTML=svgBase(id,'Removing the roller, cutting hair off, rinsing and drying')+`<g transform="translate(400,230) scale(1.1)">${gBrushFront()}</g>${gScissors()}<g class="fx"></g><g class="labels"></g></svg>`;
+       const svg=ready(id); const dial=q(svg,'.dial'), arrow=q(svg,'.arrow'), rol=q(svg,'.rollerF'), hair=qa(svg,'.hair path'), sc=q(svg,'.scissors'); let ws=null;
+       const tl=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}});
+       tl.addLabel('s0').to(arrow,{opacity:1,duration:.3}).to(dial,{rotation:-90,transformOrigin:'50% 50%',duration:.8}).call(()=>callout(svg,556,140,'counterclockwise until it stops',{dur:1.6})).to(arrow,{opacity:0,duration:.3},'+=0.6')
+         .addLabel('s1').to(rol,{x:235,y:150,duration:1.2})
+         .addLabel('s2','+=0.3').set(sc,{x:520,y:352}).to(sc,{opacity:1,duration:.3}).to(sc,{x:760,duration:1.6,ease:'none'});
+       hair.forEach((h,i)=>tl.to(h,{y:40,opacity:0,duration:.5,ease:'power2.in'},'<'+(i?0.25:0)));
+       tl.to(sc,{opacity:0,duration:.3})
+         .addLabel('s3','+=0.3').call(()=>{ ws=waterStream(svg,640,250,392); gsap.to(ws,{opacity:1,duration:.3}); }).to({},{duration:1.5}).call(()=>{ if(ws) gsap.to(ws,{opacity:0,duration:.4,onComplete:()=>ws&&ws.remove()}); })
+         .addLabel('s4','+=0.3').to(rol,{rotation:-90,transformOrigin:'50% 50%',y:60,duration:1}).call(()=>{ const b=dryBadge(svg,642,500); gsap.to(b,{opacity:1,duration:.4}); })
+         .to({},{duration:1}).addLabel('end');
+       return tl;
+     }},
+    {k:'moppads', label:'Mop pads & tank', title:'Rinse the pads, empty the tank',
+     steps:[['Flip the mop head over','Power off first. Turn the head so the pads face up.'],['Peel the pads off','They pull straight off the rotating plates.'],['Rinse until the water runs clear','Plain water. Wring and hang them; a spare pair is in the box so you can rotate.'],['Dry fully before refitting','Damp pads smell and streak. Overnight at least; 24 hours to be safe.'],['Empty the tank, outflow to Off','Before storing it. Water left standing in the tank clouds it and clogs the feed.']],
+     note:{t:'Use only Dreame pads: the centre hole and backing are what keep them centred at 116 rpm.',k:'info'},
+     build(){
+       const id='cl-mop';
+       el.innerHTML=svgBase(id,'Mop head flipped over, pads removed and rinsed, tank emptied')+`<g class="mopW"><g transform="translate(430,300) scale(2.2)">${gMop(id)}</g></g><g class="fx"></g><g class="labels"></g></svg>`;
+       const svg=ready(id); const mopW=q(svg,'.mopW'), pads=qa(svg,'.pad'), water=q(svg,'.water'), knob=q(svg,'.flow-knob'); let ws=null;
+       const st={h:22}; const setWater=()=>{water.setAttribute('height',st.h);water.setAttribute('y',22-st.h);}; setWater(); knob.setAttribute('cx',33);
+       const tl=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}});
+       tl.addLabel('s0').call(()=>callout(svg,450,40,'power off · flip it over',{dur:1.4})).to(mopW,{rotation:180,transformOrigin:'50% 50%',duration:1.1})
+         .addLabel('s1','+=0.3').to(pads,{y:55,duration:.8,stagger:.2,ease:'power2.out'}).call(()=>callout(svg,450,40,'pads pull straight off',{dur:1.4}))
+         .addLabel('s2','+=0.3').call(()=>{ ws=waterStream(svg,268,40,182); gsap.to(ws,{opacity:1,duration:.3}); }).to({},{duration:1.6}).call(()=>{ if(ws) gsap.to(ws,{opacity:0,duration:.4,onComplete:()=>ws&&ws.remove()}); })
+         .addLabel('s3','+=0.3').call(()=>{ const b=dryBadge(svg,720,150,'pads · 24 h dry'); gsap.to(b,{opacity:1,duration:.4}); }).to({},{duration:.8}).to(mopW,{rotation:360,duration:1.1}).to(pads,{y:0,opacity:1,duration:.7},'<0.2')
+         .addLabel('s4','+=0.2').to(st,{h:0,duration:1.2,ease:'none',onUpdate:setWater}).to(knob,{attr:{cx:20},duration:.4}).call(()=>callout(svg,450,40,'tank empty · outflow OFF · ready to store',{dur:2.2}))
+         .to({},{duration:1}).addLabel('end');
+       return tl;
+     }},
+    {k:'battery', label:'Battery & storage', title:'Keep the battery healthy',
+     steps:[['Hang it the right way','Rod and brush attached, body never alone on the mount. Near a socket, away from bathrooms and heat.'],['Store charged and unplugged','Charge to 100%, then disconnect. Cool, dry, out of direct sun.'],['Top up every 3 months','A lithium pack left empty for months may never recover. A quarterly charge prevents it.'],['Mind the temperature','Charge and use between 0 and 40 °C. After long Turbo runs, give it 30 minutes before plugging in.']],
+     note:{t:'The pack is removable: press the release on its back and slide it off. A worn pack that no longer holds charge is replaced, not repaired.',k:'ok'},
+     build(){
+       const id='cl-bat';
+       el.innerHTML=stageSVG(id,{floor:'wood',head:'brush',aria:'Vacuum hanging on its wall mount with storage advice'});
+       const svg=ready(id); const P=pose(svg,{head:'brush',tilt:0,scale:.85});
+       const [bx,by]=P.B2G(92,-60); const br=mk('g'); br.innerHTML=`<rect x="${bx-6}" y="${by-62}" width="22" height="124" rx="6" fill="#2b2b31" stroke="#3a3a42"/><rect x="${bx-16}" y="${by-8}" width="30" height="16" rx="4" fill="#15151a"/>`; q(svg,'.scene').appendChild(br);
+       gsap.set(q(svg,'.mv-chg'),{opacity:1});
+       const tl=gsap.timeline({paused:true});
+       const items=[[P.H2G(-40,30),'Hang it with the rod and brush attached, never the body alone.'],[P.B2G(64,-188),'Charge to 100%, then unplug. Store cool, dry, out of the sun.'],[P.B2G(67,-50),'Stored for months? Top the battery up every 3 months.'],[P.B2G(104,-42),'Charge between 0 and 40 °C. After long Turbo use, cool it 30 minutes first.']];
+       items.forEach(([pt,t],i)=>{ tl.addLabel('s'+i).call(()=>{ clickRing(svg,pt,null); callout(svg, pt[0], pt[1]-52, t, {dur:3.2,size:13,bg:'var(--surface)',fg:'var(--fg)',stroke:'var(--line)'}); }).to({},{duration:3.5}); });
+       tl.addLabel('end');
+       return tl;
+     }},
+  ];
+  let curTL=null, cur=null, curSvg=null;
+  const renderTabs=()=>{ const c=cur||'cup'; tabsEl.innerHTML=SCENES.map((s)=>`<button type="button" class="tab${s.k===c?' active':''}" aria-pressed="${s.k===c}" data-k="${s.k}">${t(s.label)}</button>`).join(''); };
+  const renderPanel=(s,tl,svg)=>{
+    panel.innerHTML=`<h3>${t(s.title)}</h3><div class="btnrow"><button type="button" class="btn primary" data-act="play">${t('▶ Play')}</button><button type="button" class="btn" data-act="reset">${t('Reset')}</button></div><ol class="steps">${s.steps.map((st,i)=>`<li data-step="${i}"><button type="button"><span class="n">0${i+1}</span><span><b>${t(st[0])}</b>${t(st[1])}</span></button></li>`).join('')}</ol><div class="note ${s.note.k}">${t(s.note.t)}</div>`;
+    stepsUI(panel.querySelector('.steps'), tl, s.steps.map((_,i)=>'s'+i), ()=>clearAll(svg));
+    panel.querySelector('[data-act=play]').onclick=()=>{ clearAll(svg); seekTL(tl,'s0','end'); };
+    panel.querySelector('[data-act=reset]').onclick=()=>{ gsap.killTweensOf(tl); tl.pause(0); clearAll(svg); };
+  };
+  renderTabs();
+  onLang.push(()=>{ renderTabs(); const s=SCENES.find(x=>x.k===cur); if(s&&curTL) renderPanel(s,curTL,curSvg); });
+  function show(k){
+    const s=SCENES.find(x=>x.k===k); if(!s||cur===k) return; cur=k;
+    qa(tabsEl,'.tab').forEach(b=>{ const on=b.dataset.k===k; b.classList.toggle('active',on); b.setAttribute('aria-pressed',on); });
+    const old=el.querySelector('svg'); if(old) killAmb(old);
+    if(curTL){ gsap.killTweensOf(curTL); curTL.kill(); }
+    const tl=s.build(); curTL=tl; const svg=el.querySelector('svg'); curSvg=svg;
+    renderPanel(s,tl,svg);
+    gsap.delayedCall(.5,()=>{ if(curTL===tl) seekTL(tl,'s0','end'); });
+  }
+  tabsEl.addEventListener('click',e=>{ const t=e.target.closest('.tab'); if(t) show(t.dataset.k); });
+  show('cup');
+})();
+
+/* ---------- language ---------- */
+document.getElementById('lang').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setLang(b.dataset.l); });
+setLang(LANG);
+
+/* ---------- chapter nav ---------- */
+(function nav(){
+  const links=qa(document,'.chapters a'); const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!('IntersectionObserver' in window)) return;
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id)); }); },{rootMargin:'-35% 0px -55% 0px'});
+  secs.forEach(s=>io.observe(s));
+})();
+})();
+</script>
